@@ -28,16 +28,16 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("mension one.... 🤷🏻‍♂.")
+        message.reply_text("අනුගමනය කරන්න ... 🤷🏻‍♂.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text("How am I meant to promote someone that's already an admin?")
+        message.reply_text("දැනටමත් පරිපාලකයෙකු වන අයෙකු ප්‍රවර්ධනය කිරීමට මා අදහස් කරන්නේ කෙසේද??")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't promote myself! Get an admin to do it for me.")
+        message.reply_text("මට මාවම ප්‍රවර්ධනය කළ නොහැක! මා වෙනුවෙන් එය කිරීමට පරිපාලකයෙකු ලබා ගන්න.")
         return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
@@ -53,7 +53,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    message.reply_text("promoted🧡")
+    message.reply_text("උසස් කරන ලදි🧡")
     return "<b>{}:</b>" \
            "\n#PROMOTED" \
            "\n<b>Admin:</b> {}" \
@@ -74,20 +74,20 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("mension one.... 🤷🏻‍♂.")
+        message.reply_text("අනුගමනය කරන්න.... 🤷🏻‍♂.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text("i cant ban creator of the group.... 😬")
+        message.reply_text("මට කණ්ඩායමේ නිර්මාතෘව තහනම් කළ නොහැක.... 😬")
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text("Can't demote what wasn't promoted!")
+        message.reply_text("ප්‍රවර්ධනය නොකළ දේ අවතක්සේරු කළ නොහැක!")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't demote myself! Get an admin to do it for me.")
+        message.reply_text("මට මාවම පහත් කරන්න බැහැ! මා වෙනුවෙන් එය කිරීමට පරිපාලකයෙකු ලබා ගන්න.")
         return ""
 
     try:
@@ -109,8 +109,8 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                                           mention_html(user_member.user.id, user_member.user.first_name))
 
     except BadRequest:
-        message.reply_text("Could not demote. I might not be admin, or the admin status was appointed by another "
-                           "user, so I can't act upon them!")
+        message.reply_text("පහත් කිරීමට නොහැකි විය. මම පරිපාලක නොවිය හැකිය, නැතහොත් පරිපාලක තත්ත්වය වෙනත් අයෙකු විසින් පත් කරන ලදි"
+                           "පරිශීලකයා, එබැවින් මට ඔවුන් මත ක්‍රියා කළ නොහැක!")
         return ""
 
 
@@ -182,9 +182,9 @@ def invite(bot: Bot, update: Update):
             invitelink = bot.exportChatInviteLink(chat.id)
             update.effective_message.reply_text(invitelink)
         else:
-            update.effective_message.reply_text("I don't have access to the invite link, try changing my permissions!")
+            update.effective_message.reply_text("මට ආරාධනා සබැඳියට ප්‍රවේශය නැත, මගේ අවසර වෙනස් කිරීමට උත්සාහ කරන්න!")
     else:
-        update.effective_message.reply_text("I can only give you invite links for supergroups and channels, sorry!")
+        update.effective_message.reply_text("මට ඔබට ලබා දිය හැක්කේ සුපිරි කණ්ඩායම් සහ නාලිකා සඳහා ආරාධනා සබැඳි පමණි, සමාවන්න!")
 
 
 @run_async
@@ -198,8 +198,8 @@ def adminlist(bot: Bot, update: Update):
         if user.username:
             name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
         if status == "creator":
-            text += "\n 🔱 Creator:"
-            text += "\n` • `{} \n\n 🔰 Admin:".format(name)
+            text += "\n 🔱 මැවුම්කරු:"
+            text += "\n` • `{} \n\n 🔰 පරිපාලක:".format(name)
     for admin in administrators:
         user = admin.user
         status = admin.status
@@ -220,11 +220,11 @@ __help__ = """
  - /adminlist: list of admins in the chat
 
 *Admin only:*
- - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
- - /unpin: unpins the currently pinned message
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
+ - /pin: නිශ්ශබ්දව පණිවිඩයට පිළිතුරු සපයයි - එකතු කරන්න 'loud' හෝ 'notify' පරිශීලකයින්ට දැනුම් දීම් කිරීමට.
+ - /unpin: දැනට ඇලවූ පණිවිඩය ඉවත් කරයි
+ - /invitelink: ආරාධනා සබැඳිය ලැබේ
+ - /promote: පරිශීලකයා පිළිතුරු දුන් ප්‍රවර්ධනය කරයි
+ - /demote: පරිශීලකයා පිළිතුරු දුන් අගය අඩු කරයි
 """
 
 __mod_name__ = "Admin"
