@@ -27,16 +27,16 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
             print(var)
             if (var == "no"):
                 sql.set_allow_connect_to_chat(chat.id, False)
-                update.effective_message.reply_text("Disabled connections to this chat for users")
+                update.effective_message.reply_text("පරිශීලකයින් සඳහා මෙම කතාබහට අක්‍රීය සම්බන්ධතා")
             elif(var == "yes"):
                 sql.set_allow_connect_to_chat(chat.id, True)
-                update.effective_message.reply_text("Enabled connections to this chat for users")
+                update.effective_message.reply_text("පරිශීලකයින් සඳහා මෙම කතාබස් වෙත සම්බන්ධතා සබල කර ඇත")
             else:
-                update.effective_message.reply_text("Please enter on/yes/off/no in group!")
+                update.effective_message.reply_text("කරුණාකර ඇතුලත් කරන්න on/yes/off/no කණ්ඩායමේ!")
         else:
-            update.effective_message.reply_text("Please enter on/yes/off/no in group!")
+            update.effective_message.reply_text("කරුණාකර ඇතුලත් කරන්න on/yes/off/no කණ්ඩායමේ!")
     else:
-        update.effective_message.reply_text("Please enter on/yes/off/no in group!")
+        update.effective_message.reply_text("කරුණාකර ඇතුලත් කරන්න on/yes/off/no කණ්ඩායමේ!")
 
 
 @run_async
@@ -48,7 +48,7 @@ def connect_chat(bot, update, args):
             try:
                 connect_chat = int(args[0])
             except ValueError:
-                update.effective_message.reply_text("Invalid Chat ID provided!")
+                update.effective_message.reply_text("අවලංගු චැට් හැඳුනුම්පත ලබා දී ඇත!")
             if (bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('administrator', 'creator') or 
                                      (sql.allow_connect_to_chat(connect_chat) == True) and 
                                      bot.get_chat_member(connect_chat, update.effective_message.from_user.id).status in ('member')) or (
@@ -57,7 +57,7 @@ def connect_chat(bot, update, args):
                 connection_status = sql.connect(update.effective_message.from_user.id, connect_chat)
                 if connection_status:
                     chat_name = dispatcher.bot.getChat(connected(bot, update, chat, user.id, need_admin=False)).title
-                    update.effective_message.reply_text("Successfully connected to *{}*".format(chat_name), parse_mode=ParseMode.MARKDOWN)
+                    update.effective_message.reply_text("සමඟ සාර්ථකව සම්බන්ධ වී ඇත*{}*".format(chat_name), parse_mode=ParseMode.MARKDOWN)
 
                     #Add chat to connection history
                     history = sql.get_history(user.id)
@@ -95,29 +95,29 @@ def connect_chat(bot, update, args):
                     keyboard(bot, update)
                     
                 else:
-                    update.effective_message.reply_text("Connection failed!")
+                    update.effective_message.reply_text("සම්බන්ධතාවය අසාර්ථක විය!")
             else:
-                update.effective_message.reply_text("Connections to this chat not allowed!")
+                update.effective_message.reply_text("මෙම කතාබහට සම්බන්ධ වීමට අවසර නැත!")
         else:
-            update.effective_message.reply_text("Input chat ID to connect!")
+            update.effective_message.reply_text("සම්බන්ධ වීමට චැට් හැඳුනුම්පත ඇතුළත් කරන්න!")
             history = sql.get_history(user.id)
             print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
 
     else:
-        update.effective_message.reply_text("Usage limited to PMs only!")
+        update.effective_message.reply_text("භාවිතය PM වලට පමණක් සීමා වේ!")
 
 
 def disconnect_chat(bot, update):
     if update.effective_chat.type == 'private':
         disconnection_status = sql.disconnect(update.effective_message.from_user.id)
         if disconnection_status:
-            sql.disconnected_chat = update.effective_message.reply_text("Disconnected from chat!")
+            sql.disconnected_chat = update.effective_message.reply_text("කතාබස් වලින් විසන්ධි විය!")
             #Rebuild user's keyboard
             keyboard(bot, update)
         else:
-           update.effective_message.reply_text("Disconnection unsuccessfull!")
+           update.effective_message.reply_text("විසන්ධි කිරීම අසාර්ථකයි!")
     else:
-        update.effective_message.reply_text("Usage restricted to PMs only")
+        update.effective_message.reply_text("භාවිතය PM වලට පමණක් සීමා වේ")
 
 
 def connected(bot, update, chat, user_id, need_admin=True):
@@ -131,12 +131,12 @@ def connected(bot, update, chat, user_id, need_admin=True):
                 if bot.get_chat_member(conn_id, update.effective_message.from_user.id).status in ('administrator', 'creator') or user_id in SUDO_USERS:
                     return conn_id
                 else:
-                    update.effective_message.reply_text("You need to be a admin in a connected group!")
+                    update.effective_message.reply_text("ඔබ සම්බන්ධිත කණ්ඩායමක පරිපාලකයෙකු විය යුතුය!")
                     exit(1)
             else:
                 return conn_id
         else:
-            update.effective_message.reply_text("Group changed rights connection or you are not admin anymore.\nI'll disconnect you.")
+            update.effective_message.reply_text("කණ්ඩායම් අයිතිවාසිකම් සම්බන්ධතාවය වෙනස් කර හෝ ඔබ තවදුරටත් පරිපාලක නොවේ.\nමම ඔබව විසන්ධි කරන්නම්.")
             disconnect_chat(bot, update)
             exit(1)
     else:
@@ -145,14 +145,14 @@ def connected(bot, update, chat, user_id, need_admin=True):
 
 
 __help__ = """
-Actions are available with connected groups:
- • View and edit notes
- • View and edit filters
- • More in future!
+🔰*සම්බන්ධිත කණ්ඩායම් සමඟ ක්‍රියා ලබා ගත හැකිය*:
+ 🔅 සටහන් බලන්න සහ සංස්කරණය කරන්න
+ 🔅 පෙරහන් බලන්න සහ සංස්කරණය කරන්න
+ 🔅 අනාගතයේදී තවත්!
 
- - /connect <chatid>: Connect to remote chat
- - /disconnect: Disconnect from chat
- - /allowconnect on/yes/off/no: Allow connect users to group
+ - /connect <chatid>: දුරස්ථ කතාබස් වෙත සම්බන්ධ වන්න
+ - /disconnect: කතාබස් වලින් විසන්ධි කරන්න
+ - /allowconnect on/yes/off/no: කණ්ඩායම් වලට සම්බන්ධ වීමට පරිශීලකයින්ට ඉඩ දෙන්න
 """
 
 __mod_name__ = "Connections"
