@@ -18,18 +18,13 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-hoi {}, my name is {}! if you have any questions about how to use me please give me /help... 
+hoi {}, මගේ නම {}! මා භාවිතා කරන්නේ කෙසේද යන්න පිළිබඳව ඔබට කිසියම් ප්‍රශ්නයක් ඇත්නම් කරුණාකර යොමු කරන්න  /help... 
 
-im a group manager bot maintained by  [this person](tg://user?id={}).
+කණ්ඩායම් කළමණාකරු බොට් විසින් නඩත්තු කරනු ලැබේ  [this person](tg://user?id={}).
 
-My future updates will be put into This Channel - @MarieChechi & My Support Group @InFoTelGroup.
+මගේ අනාගත යාවත්කාලීන කිරීම් මෙම නාලිකාවට ඇතුළත් කරනු ඇත -  & @snewst මගේ සහායක කණ්ඩායම @cyberwordk .
 
-This is my [Deploy Code](https://heroku.com/deploy?template=https://github.com/TGExplore/Marie-2.0-English),
-you can create clone same like me..
-
-For more commands click /help...
-
-**Keep in mind that any changes you DO do to the source have to be on github, as per the license.**
+**ඔබ ප්‍රභවයට කරන ඕනෑම වෙනස්කමක් බලපත්‍රයට අනුව ගිතුබ් මත තිබිය යුතු බව මතක තබා ගන්න.**
 
 """
 
@@ -38,22 +33,15 @@ HELP_STRINGS = """
 Hello! my name *{}*.
 
 *Main* available commands:
- - /start: Start the bot...
- - /help: help....
- - /donate: To find out more about donating!
- - /settings:
-   - in PM: To find out what SETTINGS you have set....
+ - /start: බොට් එක ආරම්භ කරන්න...
+ - /help: උදව්....
+ - /settings:ස ැකසුම්  සිදු කිරීම.
+   - in PM: ඔබ සකසා ඇති සැකසුම් මොනවාදැයි සොයා ගැනීමට....
    - in a group:
 
 {}
 And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
-
-DONATE_STRING = """Heya, glad to hear you want to donate!
-It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
-motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \
-(see his bio!). He's just a poor student, so every little helps!
-There are two ways of paying him; [PayPal](paypal.me/PaulSonOfLars), or [Monzo](monzo.me/paulnionvestergaardlarsen)."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -74,7 +62,7 @@ for module_name in ALL_MODULES:
     if not imported_module.__mod_name__.lower() in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
-        raise Exception("Can't have two modules with the same name! Please change one")
+        raise Exception("එකම නමක් සහිත මොඩියුල දෙකක් තිබිය නොහැක! කරුණාකර එකක් වෙනස් කරන්න")
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
         HELPABLE[imported_module.__mod_name__.lower()] = imported_module
@@ -116,7 +104,7 @@ def send_help(chat_id, text, keyboard=None):
 def test(bot: Bot, update: Update):
     # pprint(eval(str(update)))
     # update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
-    update.effective_message.reply_text("This person edited a message")
+    update.effective_message.reply_text("මෙම පුද්ගලයා පණිවිඩයක් සංස්කරණය කළේය")
     print(update.effective_message)
 
 
@@ -145,7 +133,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("waked up😏😏😏")
+        update.effective_message.reply_text("🙏 ආයුබෝවන්!🙏  මව අවදි කල ඔබට ස්තුතියි ...😊😊)
 
 
 # for test purposes
@@ -217,14 +205,14 @@ def help_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
+        if excp.message == "පණිවිඩය වෙනස් කර නොමැත":
             pass
-        elif excp.message == "Query_id_invalid":
+        elif excp.message == "විමසුම_අවස්ථාව වැරදිය":
             pass
-        elif excp.message == "Message can't be deleted":
+        elif excp.message == "පණිවිඩය මකා දැමිය නොහැක":
             pass
         else:
-            LOGGER.exception("Exception in help buttons. %s", str(query.data))
+            LOGGER.exception("උදව් බොත්තම් වල ව්‍යතිරේකය. %s", str(query.data))
 
 
 @run_async
@@ -235,7 +223,7 @@ def get_help(bot: Bot, update: Update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
+        update.effective_message.reply_text("හැකි විධාන ලැයිස්තුවක් ලබා ගැනීමට PM හි මා අමතන්න.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="Help",
                                                                        url="t.me/{}?start=help".format(
@@ -244,7 +232,7 @@ def get_help(bot: Bot, update: Update):
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
+        text = "මෙන්න ලබා ගත හැකි උපකාරය *{}* module:\n".format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
@@ -257,24 +245,24 @@ def send_settings(chat_id, user_id, user=False):
         if USER_SETTINGS:
             settings = "\n\n".join(
                 "*{}*:\n{}".format(mod.__mod_name__, mod.__user_settings__(user_id)) for mod in USER_SETTINGS.values())
-            dispatcher.bot.send_message(user_id, "These are your current settings:" + "\n\n" + settings,
+            dispatcher.bot.send_message(user_id, "මේවා ඔබගේ වර්තමාන සැකසුම් වේ:" + "\n\n" + settings,
                                         parse_mode=ParseMode.MARKDOWN)
 
         else:
-            dispatcher.bot.send_message(user_id, "Seems like there aren't any user specific settings available :'(",
+            dispatcher.bot.send_message(user_id, "පරිශීලක විශේෂිත සැකසුම් නොමැති බව පෙනේ :'(",
                                         parse_mode=ParseMode.MARKDOWN)
 
     else:
         if CHAT_SETTINGS:
             chat_name = dispatcher.bot.getChat(chat_id).title
             dispatcher.bot.send_message(user_id,
-                                        text="Which module would you like to check {}'s settings for?".format(
+                                        text="ඔබ පරීක්ෂා කිරීමට කැමති මොඩියුලය {}'s settings for?".format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
                                             paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
         else:
-            dispatcher.bot.send_message(user_id, "Seems like there aren't any chat settings available :'(\nSend this "
-                                                 "in a group chat you're admin in to find its current settings!",
+            dispatcher.bot.send_message(user_id, "චැට් සැකසුම් කිසිවක් නොමැති බව පෙනේ :'(\nSend this "
+                                                 "කණ්ඩායම් සංවාදයකදී ඔබ එහි වර්තමාන සැකසුම් සොයා ගැනීමට පරිපාලක වේ!",
                                         parse_mode=ParseMode.MARKDOWN)
 
 
@@ -291,7 +279,7 @@ def settings_button(bot: Bot, update: Update):
             chat_id = mod_match.group(1)
             module = mod_match.group(2)
             chat = bot.get_chat(chat_id)
-            text = "*{}* has the following settings for the *{}* module:\n\n".format(escape_markdown(chat.title),
+            text = "*{}* සඳහා පහත සැකසුම් ඇත *{}* module:\n\n".format(escape_markdown(chat.title),
                                                                                      CHAT_SETTINGS[module].__mod_name__) + \
                    CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
             query.message.reply_text(text=text,
@@ -304,8 +292,8 @@ def settings_button(bot: Bot, update: Update):
             chat_id = prev_match.group(1)
             curr_page = int(prev_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
-                                     "you're interested in.".format(chat.title),
+            query.message.reply_text("ආයුබෝවන් කොහොම ද! සඳහා සැකසුම් කිහිපයක් තිබේ {} - ඉදිරියට ගොස් කුමක් තෝරා ගන්න "
+                                     "ඔබ උනන්දුයි".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
                                                           chat=chat_id)))
@@ -314,8 +302,8 @@ def settings_button(bot: Bot, update: Update):
             chat_id = next_match.group(1)
             next_page = int(next_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
-                                     "you're interested in.".format(chat.title),
+            query.message.reply_text("ආයුබෝවන් කොහොම ද! සඳහා සැකසුම් කිහිපයක් තිබේ {} - ඉදිරියට ගොස් කුමක් තෝරා ගන්න "
+                                     "ඔබ උනන්දුයි.".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
                                                           chat=chat_id)))
@@ -323,8 +311,8 @@ def settings_button(bot: Bot, update: Update):
         elif back_match:
             chat_id = back_match.group(1)
             chat = bot.get_chat(chat_id)
-            query.message.reply_text(text="Hi there! There are quite a few settings for {} - go ahead and pick what "
-                                          "you're interested in.".format(escape_markdown(chat.title)),
+            query.message.reply_text(text="ආයුබෝවන් කොහොම ද! සඳහා සැකසුම් කිහිපයක් තිබේ {} - ඉදිරියට ගොස් කුමක් තෝරා ගන්න "
+                                          "ඔබ උනන්දුයි.".format(escape_markdown(chat.title)),
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
                                                                                         chat=chat_id)))
@@ -333,14 +321,14 @@ def settings_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not modified":
+        if excp.message == "පණිවිඩය වෙනස් කර නොමැත":
             pass
-        elif excp.message == "Query_id_invalid":
+        elif excp.message == "විමසුම_අවස්ථාව":
             pass
-        elif excp.message == "Message can't be deleted":
+        elif excp.message == "පණිවිඩය මකා දැමිය නොහැක":
             pass
         else:
-            LOGGER.exception("Exception in settings buttons. %s", str(query.data))
+            LOGGER.exception("සැකසුම් බොත්තම් වල ව්‍යතිරේකය. %s", str(query.data))
 
 
 @run_async
@@ -353,14 +341,14 @@ def get_settings(bot: Bot, update: Update):
     # ONLY send settings in PM
     if chat.type != chat.PRIVATE:
         if is_user_admin(chat, user.id):
-            text = "Click here to get this chat's settings, as well as yours."
+            text = "මෙම කතාබස් සැකසීම් මඔබට අවශ්‍ය වෙනත් සැකසුම්  සිදු සිදුකිරීමට  මෙතන ක්ලික් කරන්න."
             msg.reply_text(text,
                            reply_markup=InlineKeyboardMarkup(
                                [[InlineKeyboardButton(text="Settings",
                                                       url="t.me/{}?start=stngs_{}".format(
                                                           bot.username, chat.id))]]))
         else:
-            text = "Click here to check your settings."
+            text = "ඔබගේ සැකසුම් පරීක්ෂා කිරීමට මෙහි ක්ලික් කරන්න."
 
     else:
         send_settings(chat.id, user.id, True)
@@ -374,8 +362,8 @@ def donate(bot: Bot, update: Update):
     if chat.type == "private":
         update.effective_message.reply_text(DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
-        if OWNER_ID != 254318997 and DONATION_LINK:
-            update.effective_message.reply_text("You can also donate to the person currently running me "
+        if OWNER_ID != 1131653685 and DONATION_LINK:
+            update.effective_message.reply_text("දැනට මා පවත්වාගෙන යන පුද්ගලයාට ද ඔබට පරිත්‍යාග කළ හැකිය"
                                                 "[here]({})".format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
 
@@ -383,9 +371,9 @@ def donate(bot: Bot, update: Update):
         try:
             bot.send_message(user.id, DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
-            update.effective_message.reply_text("I've PM'ed you about donating to my creator!")
+            update.effective_message.reply_text("මගේ නිර්මාණකරුට පරිත්‍යාග කිරීම ගැන මම ඔබට ස්තුති කරමි !")
         except Unauthorized:
-            update.effective_message.reply_text("Contact me in PM first to get donation information.")
+            update.effective_message.reply_text("පරිත්යාග තොරතුරු ලබා ගැනීම සඳහා ප්රථමයෙන් මා අමතන්න.")
 
 
 def migrate_chats(bot: Bot, update: Update):
@@ -403,7 +391,7 @@ def migrate_chats(bot: Bot, update: Update):
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Successfully migrated!")
+    LOGGER.info("සාර්ථකව සංක්‍රමණය විය!")
     raise DispatcherHandlerStop
 
 
@@ -451,5 +439,5 @@ def main():
 
 
 if __name__ == '__main__':
-    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    LOGGER.info("මොඩියුල සාර්ථකව පටවා ඇත: " + str(ALL_MODULES))
     main()
