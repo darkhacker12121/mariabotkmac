@@ -21,13 +21,13 @@ from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import warns_sql as sql
 
 WARN_HANDLER_GROUP = 9
-CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
+CURRENT_WARNING_FILTER_STRING = "<b>මෙම සංවාදයේ වත්මන් අනතුරු ඇඟවීමේ පෙරහන්:</b>\n"
 
 
 # Not async
 def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = None) -> str:
     if is_user_admin(chat, user.id):
-        message.reply_text("Damn admins, can't even be warned!")
+        message.reply_text("නරක පරිපාලකයින්, අනතුරු ඇඟවීමට පවා නොහැකිය!")
         return ""
 
     if warner:
@@ -66,7 +66,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
         keyboard = InlineKeyboardMarkup(
             [[InlineKeyboardButton("Remove warn", callback_data="rm_warn({})".format(user.id))]])
 
-        reply = "{} has {}/{} warnings... watch out!".format(mention_html(user.id, user.first_name), num_warns,
+        reply = "{} has {}/{} අනතුරු ඇඟවීම් ... පරිස්සම් වන්න!".format(mention_html(user.id, user.first_name), num_warns,
                                                              limit)
         if reason:
             reply += "\nReason for last warn:\n{}".format(html.escape(reason))
@@ -84,7 +84,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
     try:
         message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "පිළිතුරු පණිවිඩය හමු නොවීය":
             # Do not reply
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML, quote=False)
         else:
@@ -106,7 +106,7 @@ def button(bot: Bot, update: Update) -> str:
         res = sql.remove_warn(user_id, chat.id)
         if res:
             update.effective_message.edit_text(
-                "Warn removed by {}.".format(mention_html(user.id, user.first_name)),
+                "විසින් ඉවත් කරන ලද අනතුරු ඇඟවීම{}.".format(mention_html(user.id, user.first_name)),
                 parse_mode=ParseMode.HTML)
             user_member = chat.get_member(user_id)
             return "<b>{}:</b>" \
@@ -117,7 +117,7 @@ def button(bot: Bot, update: Update) -> str:
                                               mention_html(user_member.user.id, user_member.user.first_name))
         else:
             update.effective_message.edit_text(
-                "User has already has no warns.".format(mention_html(user.id, user.first_name)),
+                "පරිශීලකයාට දැනටමත් අනතුරු ඇඟවීම් නොමැත.".format(mention_html(user.id, user.first_name)),
                 parse_mode=ParseMode.HTML)
 
     return ""
@@ -140,7 +140,7 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             return warn(chat.get_member(user_id).user, chat, reason, message, warner)
     else:
-        message.reply_text("No user was designated!")
+        message.reply_text("කිසිදු පරිශීලකයෙකු නම් කර නැත!")
     return ""
 
 
@@ -166,7 +166,7 @@ def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
                                           mention_html(user.id, user.first_name),
                                           mention_html(warned.id, warned.first_name))
     else:
-        message.reply_text("No user has been designated!")
+        message.reply_text("කිසිදු පරිශීලකයෙකු නම් කර නැත!")
     return ""
 
 
@@ -182,7 +182,7 @@ def warns(bot: Bot, update: Update, args: List[str]):
         limit, soft_warn = sql.get_warn_setting(chat.id)
 
         if reasons:
-            text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
+            text = "මෙම පරිශීලකයා සතුව ඇත {}/{} අනතුරු ඇඟවීම්, පහත සඳහන් හේතු නිසා:".format(num_warns, limit)
             for reason in reasons:
                 text += "\n - {}".format(reason)
 
@@ -191,9 +191,9 @@ def warns(bot: Bot, update: Update, args: List[str]):
                 update.effective_message.reply_text(msg)
         else:
             update.effective_message.reply_text(
-                "User has {}/{} warnings, but no reasons for any of them.".format(num_warns, limit))
+                "පරිශීලකයා සතුව ඇත {}/{} අනතුරු ඇඟවීම්, නමුත් ඒවායින් කිසිවක් සඳහා හේතු නොමැත.".format(num_warns, limit))
     else:
-        update.effective_message.reply_text("This user hasn't got any warnings!")
+        update.effective_message.reply_text("මෙම පරිශීලකයාට කිසිදු අනතුරු ඇඟවීමක් ලැබී නැත!")
 
 
 # Dispatcher handler stop - do not async
@@ -224,7 +224,7 @@ def add_warn_filter(bot: Bot, update: Update):
 
     sql.add_warn_filter(chat.id, keyword, content)
 
-    update.effective_message.reply_text("Warn handler added for '{}'!".format(keyword))
+    update.effective_message.reply_text("සඳහා අනතුරු ඇඟවීමේ හසුරුව එකතු කරන ලදි'{}'!".format(keyword))
     raise DispatcherHandlerStop
 
 
@@ -248,16 +248,16 @@ def remove_warn_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_warn_triggers(chat.id)
 
     if not chat_filters:
-        msg.reply_text("No warning filters are active here!")
+        msg.reply_text("මෙහි කිසිදු අනතුරු ඇඟවීමේ පෙරහන් සක්‍රීය නොවේ!")
         return
 
     for filt in chat_filters:
         if filt == to_remove:
             sql.remove_warn_filter(chat.id, to_remove)
-            msg.reply_text("Yep, I'll stop warning people for that.")
+            msg.reply_text("ඔව්, මම ඒ සඳහා මිනිසුන්ට අනතුරු ඇඟවීම නවත්වමි.")
             raise DispatcherHandlerStop
 
-    msg.reply_text("That's not a current warning filter - run /warnlist for all active warning filters.")
+    msg.reply_text("එය වත්මන් අනතුරු ඇඟවීමේ පෙරණයක් නොවේ - ධාවනය කරන්න /warnlist සියලුම ක්‍රියාකාරී අනතුරු ඇඟවීමේ පෙරහන් සඳහා.")
 
 
 @run_async
@@ -266,7 +266,7 @@ def list_warn_filters(bot: Bot, update: Update):
     all_handlers = sql.get_chat_warn_triggers(chat.id)
 
     if not all_handlers:
-        update.effective_message.reply_text("No warning filters are active here!")
+        update.effective_message.reply_text("මෙහි කිසිදු අනතුරු ඇඟවීමේ පෙරහන් සක්‍රීය නොවේ!")
         return
 
     filter_list = CURRENT_WARNING_FILTER_STRING
@@ -313,17 +313,17 @@ def set_warn_limit(bot: Bot, update: Update, args: List[str]) -> str:
     if args:
         if args[0].isdigit():
             if int(args[0]) < 3:
-                msg.reply_text("The minimum warn limit is 3!")
+                msg.reply_text("අවම අනතුරු ඇඟවීමේ සීමාව 3 යි!")
             else:
                 sql.set_warn_limit(chat.id, int(args[0]))
-                msg.reply_text("Updated the warn limit to {}".format(args[0]))
+                msg.reply_text("අනතුරු ඇඟවීමේ සීමාව යාවත්කාලීන කරන ලදි {}".format(args[0]))
                 return "<b>{}:</b>" \
                        "\n#SET_WARN_LIMIT" \
                        "\n<b>Admin:</b> {}" \
-                       "\nSet the warn limit to <code>{}</code>".format(html.escape(chat.title),
+                       "\nඅනතුරු ඇඟවීමේ සීමාව සකසන්න <code>{}</code>".format(html.escape(chat.title),
                                                                         mention_html(user.id, user.first_name), args[0])
         else:
-            msg.reply_text("Give me a number as an arg!")
+            msg.reply_text("මට අංකයක් අංකයක් දෙන්න!")
     else:
         limit, soft_warn = sql.get_warn_setting(chat.id)
 
@@ -341,18 +341,18 @@ def set_warn_strength(bot: Bot, update: Update, args: List[str]):
     if args:
         if args[0].lower() in ("on", "yes"):
             sql.set_warn_strength(chat.id, False)
-            msg.reply_text("Too many warns will now result in a ban!")
+            msg.reply_text("අනතුරු ඇඟවීම් ඕනෑවට වඩා දැන් තහනමක් වනු ඇත!")
             return "<b>{}:</b>\n" \
                    "<b>Admin:</b> {}\n" \
-                   "Has enabled strong warns. Users will be banned.".format(html.escape(chat.title),
+                   "දැඩි අනතුරු ඇඟවීම් සක්‍රීය කර ඇත. පරිශීලකයින් තහනම් කරනු ලැබේ.".format(html.escape(chat.title),
                                                                             mention_html(user.id, user.first_name))
 
         elif args[0].lower() in ("off", "no"):
             sql.set_warn_strength(chat.id, True)
-            msg.reply_text("Too many warns will now result in a kick! Users will be able to join again after.")
+            msg.reply_text("අනතුරු ඇඟවීම් ඕනෑවට වඩා දැන් පයින් ගසනු ඇත! පරිශීලකයින්ට පසුව නැවත සම්බන්ධ වීමට හැකි වනු ඇත.")
             return "<b>{}:</b>\n" \
                    "<b>Admin:</b> {}\n" \
-                   "Has disabled strong warns. Users will only be kicked.".format(html.escape(chat.title),
+                   "දැඩි අනතුරු ඇඟවීම් අක්‍රීය කර ඇත. පරිශීලකයින්ට පයින් ගසනු ලැබේ.".format(html.escape(chat.title),
                                                                                   mention_html(user.id,
                                                                                                user.first_name))
 
@@ -393,17 +393,17 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /warns <userhandle>: get a user's number, and reason, of warnings.
- - /warnlist: list of all current warning filters
+ - /warns <userhandle>: අනතුරු ඇඟවීම් සඳහා පරිශීලක අංකයක් සහ හේතුවක් ලබා ගන්න.
+ - /warnlist: දැනට පවතින සියලුම අනතුරු ඇඟවීමේ පෙරහන් ලැයිස්තුව
 
-*Admin only:*
- - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
- - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
- - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
-be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
- - /nowarn <keyword>: stop a warning filter
- - /warnlimit <num>: set the warning limit
- - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
+*පරිපාලක පමණි:*
+ - /warn <userhandle>: පරිශීලකයෙකුට අනතුරු අඟවන්න. අනතුරු ඇඟවීම් 3 කට පසුව, පරිශීලකයා කණ්ඩායමෙන් තහනම් කරනු ලැබේ. පිළිතුරක් ලෙසද භාවිතා කළ හැකිය.
+ - /resetwarn <userhandle>: පරිශීලකයෙකු සඳහා අනතුරු ඇඟවීම් නැවත සකසන්න. පිළිතුරක් ලෙසද භාවිතා කළ හැකිය.
+ - /addwarn <keyword> <reply message>: කිසියම් යතුරු පදයක අනතුරු ඇඟවීමේ පෙරණයක් සකසන්න. ඔබට ඔබේ මූලික පදය අවශ්‍ය නම් \
+වාක්‍යයක් වන්න, එය උපුටා දැක්වීම් සමඟ ඇතුළත් කරන්න, `/addwarn "ඉතා තරහයි" මෙය කෝපාවිෂ්ට පරිශීලකයෙකි`. 
+ - /nowarn <keyword>: අනතුරු ඇඟවීමේ පෙරණයක් නවත්වන්න
+ - /warnlimit <num>: සහ අනතුරු ඇඟවීමේ සීමාව
+ - /strongwarn <on/yes/off/no>: ක්‍රියාත්මක කර ඇත්නම්, අනතුරු ඇඟවීමේ සීමාව ඉක්මවා යාම තහනම් කිරීමට හේතු වේ. නැතිනම් පයින් ගසනු ඇත.
 """
 
 __mod_name__ = "Warnings"
