@@ -17,55 +17,54 @@ from tg_bot.modules.helper_funcs.extraction import extract_user
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 RUN_STRINGS = (
-    "Where do you think you're going?",
-    "Huh? what? did they get away?",
-    "ZZzzZZzz... Huh? what? oh, just them again, nevermind.",
-    "Get back here!",
-    "Not so fast...",
-    "Look out for the wall!",
-    "Don't leave me alone with them!!",
-    "You run, you die.",
-    "Jokes on you, I'm everywhere",
-    "You're gonna regret that...",
-    "You could also try /kickme, I hear that's fun.",
-    "Go bother someone else, no-one here cares.",
-    "You can run, but you can't hide.",
-    "Is that all you've got?",
-    "I'm behind you...",
-    "You've got company!",
-    "We can do this the easy way, or the hard way.",
-    "You just don't get it, do you?",
-    "Yeah, you better run!",
-    "Please, remind me how much I care?",
-    "I'd run faster if I were you.",
-    "That's definitely the droid we're looking for.",
-    "May the odds be ever in your favour.",
-    "Famous last words.",
-    "And they disappeared forever, never to be seen again.",
-    "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
-    "Yeah yeah, just tap /kickme already.",
-    "Here, take this ring and head to Mordor while you're at it.",
-    "Legend has it, they're still running...",
-    "Unlike Harry Potter, your parents can't protect you from me.",
-    "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might "
-    "be the next Vader.",
-    "Multiple calculations later, I have decided my interest in your shenanigans is exactly 0.",
-    "Legend has it, they're still running.",
-    "Keep it up, not sure we want you here anyway.",
-    "You're a wiza- Oh. Wait. You're not Harry, keep moving.",
-    "NO RUNNING IN THE HALLWAYS!",
-    "Hasta la vista, baby.",
-    "Who let the dogs out?",
-    "It's funny, because no one cares.",
-    "Ah, what a waste. I liked that one.",
-    "Frankly, my dear, I don't give a damn.",
-    "My milkshake brings all the boys to yard... So run faster!",
-    "You can't HANDLE the truth!",
-    "A long time ago, in a galaxy far far away... Someone would've cared about that. Not anymore though.",
-    "Hey, look at them! They're running from the inevitable banhammer... Cute.",
-    "Han shot first. So will I.",
-    "What are you running after, a white rabbit?",
-    "As The Doctor would say... RUN!",
+    "ඔයා කොහෙද යන්නේ කියලා ඔයා හිතන්නේ?",
+    "හහ්? කුමක්? ඔවුන් පැන ගියාද?",
+    "ZZzzZZzz... හහ්? කුමක්? ඔහ්, ඔවුන් නැවත වරක්, කමක් නැහැ.",
+    "නැවත මෙහි එන්න!",
+    "එතරම් වේගවත් නොවේ ...",
+    "බිත්තිය දෙස බලන්න!",
+    "මාව ඔවුන් සමඟ තනි නොකරන්න !!",
+    "ඔයා දුවනවා, ඔයා මැරෙනවා.",
+    "ඔබට විහිළු, මම සෑම තැනකම සිටිමි",
+    "ඔයා ඒ ගැන පසුතැවෙනවා ...",
+    "ඔබටත් උත්සාහ කරන්න / පයින් ගහන්න, මට ඇහෙනවා ඒක විනෝදයක් කියලා.",
+    "වෙනත් කෙනෙකුට කරදර කරන්න, මෙහි කිසිවෙකු ගණන් ගන්නේ නැත.",
+    "ඔබට දුවන්න පුළුවන්, නමුත් ඔබට සැඟවිය නොහැක.",
+    "ඔබට ලැබී ඇත්තේ එපමණක්ද?",
+    "මම ඔබ පිටුපසින් ...",
+    "ඔබට සමාගමක් ඇත!",
+    "අපට මෙය පහසුම ක්‍රමය හෝ දුෂ්කර ක්‍රමය කළ හැකිය.",
+    "ඔබට එය තේරෙන්නේ නැහැ නේද?",
+    "ඔව්, ඔබ දුවනවා නම් හොඳයි!",
+    "කරුණාකර, මට කොතරම් සැලකිල්ලක් දක්වනවාදැයි මට මතක් කරන්න?",
+    "මම ඔයා නම් මම වේගයෙන් දුවනවා.",
+    "එය නියත වශයෙන්ම අප සොයන ඩ්‍රොයිඩ් ය.",
+    "අවාසි ඔබට වාසිදායක වේවා.",
+    "ප්රසිද්ධ අවසන් වදන්.",
+    "ඔවුන් සදහටම අතුරුදහන් විය.",
+    "\"ඔහ්, මා දෙස බලන්න! මම හරිම සිසිල්, මට බෝට්ටුවකින් දුවන්න පුළුවන්!\" - මෙම පුද්ගලයා",
+    "ඔව් ඔව්, තට්ටු කරන්න /kickme දැනටමත්.",
+    "මෙන්න, මෙම මුද්ද රැගෙන මොර්ඩෝර් වෙත යන්න.",
+    "පුරාවෘත්තයට එය තිබේ, ඔවුන් තවමත් ධාවනය වේ ...",
+    "හැරී පොටර් මෙන් නොව, ඔබේ දෙමාපියන්ට මා වෙතින් ඔබව ආරක්ෂා කළ නොහැක.",
+    "බිය කෝපයට හේතු වේ. කෝපය වෛරයට තුඩු දෙයි. වෛරය දුක් වේදනා ඇති කරයි. ඔබ දිගටම බියෙන් දුවන්නේ නම්, සමහර විට "
+    "ඊළඟ වෑඩර් වෙන්න.",
+    "බහුවිධ ගණනය කිරීම් පසුව, ඔබේ ෂෙනානිගන් පිළිබඳ මගේ උනන්දුව හරියටම 0 බව මම තීරණය කර ඇත්තෙමි.",
+    "පුරාවෘත්තයට එය තිබේ, ඒවා තවමත් ක්‍රියාත්මකයි.",
+    "එය දිගටම කරගෙන යන්න, කෙසේ හෝ අපට ඔබව මෙහි අවශ්‍ය බව විශ්වාස නැත.",
+    "ඔයා විශාරදයෙක්- ඔහ්. ඉන්න. ඔබ හැරී නොවේ, දිගටම ඉදිරියට යන්න.",
+    "හල්වේ වල ධාවනය නොවේ!",
+    "හස්ටා ලා විස්ටා, බබා.",
+    "බල්ලන්ට එළියට දුන්නේ කවුද?",
+    "එය විහිළුවක්, මන්ද කිසිවෙකු ගණන් නොගන්නා බැවිනි.",
+    "අහ්, මොනතරම් නාස්තියක්ද? මම ඒකට කැමතියි.",
+    "අවංකවම, මගේ ආදරණීය, මම නරකක් දෙන්නේ නැහැ.",
+    "ඔබට සත්‍යය හසුරුවා ගත නොහැක!",
+    "බොහෝ කලකට පෙර, මන්දාකිනියක බොහෝ away තින් ... කවුරුහරි ඒ ගැන සැලකිලිමත් වනු ඇත. තවදුරටත් නැත.",
+    "හේයි, ඔවුන් දෙස බලන්න! ඔවුන් දුවන්නේ නොවැලැක්විය හැකි බැන්හම්මර් වලින් ... හුරුබුහුටි.",
+    "හැන් මුලින්ම වෙඩි තැබුවා. මමත් එහෙමයි.",
+    "සුදු හාවෙකු ඔබ පසුපස දුවන්නේ කුමක් ද?",
+    "ඩොක්ටර් කියන විදියට ... දුවන්න!",
 )
 
 SLAP_TEMPLATES = (
@@ -178,8 +177,8 @@ def slap(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def get_bot_ip(bot: Bot, update: Update):
-    """ Sends the bot's IP address, so as to be able to ssh in if necessary.
-        OWNER ONLY.
+    """ අවශ්‍ය නම් ssh කිරීමට හැකි වන පරිදි බොට්ගේ IP ලිපිනය යවයි.
+        හිමිකරු පමණි.
     """
     res = requests.get("http://ipinfo.io/ip")
     update.message.reply_text(res.text)
@@ -193,7 +192,7 @@ def get_id(bot: Bot, update: Update, args: List[str]):
             user1 = update.effective_message.reply_to_message.from_user
             user2 = update.effective_message.reply_to_message.forward_from
             update.effective_message.reply_text(
-                "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.".format(
+                "මුල් යවන්නා, {}, හැඳුනුම්පතක් ඇත`{}`.\nඉදිරියට යවන්නා, {}, හැඳුනුම්පතක් ඇත `{}`.".format(
                     escape_markdown(user2.first_name),
                     user2.id,
                     escape_markdown(user1.first_name),
@@ -201,16 +200,16 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN)
         else:
             user = bot.get_chat(user_id)
-            update.effective_message.reply_text("{}'s id is `{}`.".format(escape_markdown(user.first_name), user.id),
+            update.effective_message.reply_text("{} id එක `{}`.".format(escape_markdown(user.first_name), user.id),
                                                 parse_mode=ParseMode.MARKDOWN)
     else:
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == "private":
-            update.effective_message.reply_text("Your id is `{}`.".format(chat.id),
+            update.effective_message.reply_text("ඔබේ හැඳුනුම්පත `{}`.".format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
         else:
-            update.effective_message.reply_text("This group's id is `{}`.".format(chat.id),
+            update.effective_message.reply_text("මෙම කණ්ඩායමේ හැඳුනුම්පත `{}`.".format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
 
@@ -228,7 +227,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text("I can't extract a user from this.")
+        msg.reply_text("මට මෙයින් පරිශීලකයෙකු උපුටා ගත නොහැක.")
         return
 
     else:
@@ -247,19 +246,19 @@ def info(bot: Bot, update: Update, args: List[str]):
     text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!"
+        text += "\n\nමෙම පුද්ගලයා මගේ හිමිකරු - මම ඔවුන්ට එරෙහිව කිසි විටෙකත් කිසිවක් නොකරමි!"
     else:
         if user.id in SUDO_USERS:
-            text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
+            text += "\nමෙම පුද්ගලයා මගේ සුඩෝ භාවිතා කරන්නෙකි!" \
+                    "මගේ හිමිකරු තරම් බලවත් - එබැවින් එය නරඹන්න."
         else:
             if user.id in SUPPORT_USERS:
-                text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
+                text += "\nමෙම පුද්ගලයා මගේ සහායක පරිශීලකයෙකි!" \
+                        "තරමක් සූඩෝ භාවිතා කරන්නෙකු නොවේ, නමුත් ඔබට සිතියමෙන් ඉවත් කළ හැකිය."
 
             if user.id in WHITELIST_USERS:
-                text += "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them."
+                text += "\nමෙම පුද්ගලයා සුදු ලැයිස්තු ගත කර ඇත!" \
+                        "ඒ කියන්නේ මට තහනම් කරන්න අවසර නැහැ/kick ඔවුන්ට."
 
     for mod in USER_INFO:
         mod_info = mod.__user_info__(user.id).strip()
@@ -273,7 +272,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 def get_time(bot: Bot, update: Update, args: List[str]):
     location = " ".join(args)
     if location.lower() == bot.first_name.lower():
-        update.effective_message.reply_text("Its always banhammer time for me!")
+        update.effective_message.reply_text("එහි සෑම විටම මට කාලයයි!")
         bot.send_sticker(update.effective_chat.id, BAN_STICKER)
         return
 
@@ -328,19 +327,19 @@ def gdpr(bot: Bot, update: Update):
     for mod in GDPR:
         mod.__gdpr__(update.effective_user.id)
 
-    update.effective_message.reply_text("Your personal data has been deleted.\n\nNote that this will not unban "
-                                        "you from any chats, as that is telegram data, not Marie data. "
-                                        "Flooding, warns, and gbans are also preserved, as of "
+    update.effective_message.reply_text("ඔබගේ පුද්ගලික දත්ත මකා දමා ඇත.\n\nමෙය තහනම් නොවන බව සලකන්න"
+                                        "ඔබ ඕනෑම කතාබස් වලින්, එය විදුලි පණිවුඩ දත්ත මිස මාරි දත්ත නොවේ."
+                                        "Flooding, අනතුරු ඇඟවීම් සහ ග්බාන්ස් ද සංරක්ෂණය කර ඇත "
                                         "[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
-                                        "which clearly states that the right to erasure does not apply "
-                                        "\"for the performance of a task carried out in the public interest\", as is "
-                                        "the case for the aforementioned pieces of data.",
+                                        "මකාදැමීමේ අයිතිය අදාළ නොවන බව එහි පැහැදිලිව සඳහන් වේ "
+                                        "\"මහජන යහපත උදෙසා ඉටු කරන ලද කාර්යයක කාර්ය සාධනය සඳහා\", පවතින ආකාරයට "
+                                        "ඉහත දත්ත කැබලි සඳහා නඩුව.",
                                         parse_mode=ParseMode.MARKDOWN)
 
 
 MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. {} has some enhancements, to make sure that \
-saved messages are correctly parsed, and to allow you to create buttons.
+මාර්ක්ඩවුන් යනු විදුලි පණිවුඩ මඟින් සහාය දක්වන ඉතා ප්‍රබල හැඩතල ගැන්වීමේ මෙවලමකි. {} එය තහවුරු කර ගැනීම සඳහා වැඩි දියුණු කිරීම් කිහිපයක් ඇත\
+සුරකින ලද පණිවිඩ නිවැරදිව විග්‍රහ කර ඇති අතර බොත්තම් සෑදීමට ඔබට ඉඩ සලසයි.
 
 - <code>_italic_</code>: wrapping text with '_' will produce italic text
 - <code>*bold*</code>: wrapping text with '*' will produce bold text
@@ -349,24 +348,24 @@ saved messages are correctly parsed, and to allow you to create buttons.
 and tapping on it will open the page at <code>someURL</code>.
 EG: <code>[test](example.com)</code>
 
-- <code>[buttontext](buttonurl:someURL)</code>: this is a special enhancement to allow users to have telegram \
-buttons in their markdown. <code>buttontext</code> will be what is displayed on the button, and <code>someurl</code> \
-will be the url which is opened.
+- <code>[buttontext](buttonurl:someURL)</code>:පරිශීලකයින්ට විදුලි පණිවුඩ ලබා ගැනීමට මෙය විශේෂ වැඩි දියුණු කිරීමකි \
+ඒවායේ සලකුණු කිරීමේ බොත්තම්.<code>buttontext</code> බොත්තම මත දර්ශනය වන දේ වනු ඇත, සහ <code>සමහර url</code> \
+විවෘත කරන ලද url එක වනු ඇත.
 EG: <code>[This is a button](buttonurl:example.com)</code>
 
 If you want multiple buttons on the same line, use :same, as such:
 <code>[one](buttonurl://example.com)
 [two](buttonurl://google.com:same)</code>
-This will create two buttons on a single line, instead of one button per line.
+මෙය එක් පේළියකට එක් බොත්තමක් වෙනුවට තනි පේළියක බොත්තම් දෙකක් නිර්මාණය කරයි.
 
-Keep in mind that your message <b>MUST</b> contain some text other than just a button!
+ඔබේ පණිවිඩය බව මතක තබා ගන්න <b>MUST</b> බොත්තමක් හැර වෙනත් පෙළක් අඩංගු වේ!
 """.format(dispatcher.bot.first_name)
 
 
 @run_async
 def markdown_help(bot: Bot, update: Update):
     update.effective_message.reply_text(MARKDOWN_HELP, parse_mode=ParseMode.HTML)
-    update.effective_message.reply_text("Try forwarding the following message to me, and you'll see!")
+    update.effective_message.reply_text("පහත පණිවිඩය මා වෙත යොමු කිරීමට උත්සාහ කරන්න, එවිට ඔබට පෙනෙනු ඇත!")
     update.effective_message.reply_text("/save test This is a markdown test. _italics_, *bold*, `code`, "
                                         "[URL](example.com) [button](buttonurl:github.com) "
                                         "[button2](buttonurl://google.com:same)")
@@ -382,7 +381,7 @@ def stickerid(bot: Bot, update: Update):
     if msg.reply_to_message and msg.reply_to_message.sticker:
         update.effective_message.reply_text("Hello " +
                                             "[{}](tg://user?id={})".format(msg.from_user.first_name, msg.from_user.id)
-                                            + ", The sticker id you are replying is :\n```" + 
+                                            + ", ඔබ පිළිතුරු දෙන ස්ටිකර් හැඳුනුම්පත :\n```" + 
                                             escape_markdown(msg.reply_to_message.sticker.file_id) + "```",
                                             parse_mode=ParseMode.MARKDOWN)
     else:
@@ -396,8 +395,8 @@ def getsticker(bot: Bot, update: Update):
     if msg.reply_to_message and msg.reply_to_message.sticker:
         bot.sendChatAction(chat_id, "typing")
         update.effective_message.reply_text("Hello " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-                                            msg.from_user.id) + ", Please check the file you requested below."
-                                            "\nPlease use this feature wisely!",
+                                            msg.from_user.id) + ", කරුණාකර ඔබ පහත ඉල්ලූ ගොනුව පරීක්ෂා කරන්න."
+                                            "\nකරුණාකර මෙම අංගය ely ානවන්තව භාවිතා කරන්න!",
                                             parse_mode=ParseMode.MARKDOWN)
         bot.sendChatAction(chat_id, "upload_document")
         file_id = msg.reply_to_message.sticker.file_id
@@ -410,20 +409,20 @@ def getsticker(bot: Bot, update: Update):
     else:
         bot.sendChatAction(chat_id, "typing")
         update.effective_message.reply_text("Hello " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-                                            msg.from_user.id) + ", Please reply to sticker message to get sticker image",
+                                            msg.from_user.id) + ", ස්ටිකර් රූපය ලබා ගැනීමට කරුණාකර ස්ටිකර් පණිවිඩයට පිළිතුරු දෙන්න",
                                             parse_mode=ParseMode.MARKDOWN)
 
 # /ip is for private use
 __help__ = """
- - /id: get the current group id. If used by replying to a message, gets that user's id.
- - /runs: reply a random string from an array of replies.
- - /slap: slap a user, or get slapped if not a reply.
- - /time <place>: gives the local time at the given place.
- - /info: get information about a user.
- - /gdpr: deletes your information from the bot's database. Private chats only.
- - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
- - /stickerid: reply to a sticker and get sticker id of that.
- - /getsticker: reply to a sticker and get that sticker as .png and image. 
+ - /id: වත්මන් කණ්ඩායම් හැඳුනුම්පත ලබා ගන්න. පණිවිඩයකට පිළිතුරු දීමෙන් භාවිතා කරන්නේ නම්, එම පරිශීලකයාගේ හැඳුනුම්පත ලබා ගනී.
+ - /runs: අහඹු ලෙස පිළිතුරු පෙළකින් පිළිතුරු දෙන්න.
+ - /slap: පරිශීලකයෙකුට කම්මුලට ගසන්න, නැතහොත් පිළිතුරක් නොමැති නම් කම්මුලට ගසන්න.😂
+ - /time <place>: දී ඇති ස්ථානයේ දේශීය වේලාව ලබා දෙයි.
+ - /info: පරිශීලකයෙකු පිළිබඳ තොරතුරු ලබා ගන්න.
+ - /gdpr: ඔබේ තොරතුරු බොට් දත්ත ගබඩාවෙන් මකා දමයි. පුද්ගලික කතාබස් පමණි.
+ - /markdownhelp: qවිදුලි පණිවුඩයේ සලකුණු කිරීම ක්‍රියාත්මක වන ආකාරය පිළිබඳ සාරාංශය - එය හැඳින්විය හැක්කේ පුද්ගලික කතාබස් වලින් පමණි.
+ - /stickerid: ස්ටිකර් එකකට පිළිතුරු දී එහි ස්ටිකර් හැඳුනුම්පත ලබා ගන්න.
+ - /getsticker: ස්ටිකරයකට පිළිතුරු දී එම ස්ටිකරය .png සහ image ලෙස ලබා ගන්න.
 """
 
 __mod_name__ = "Misc"
