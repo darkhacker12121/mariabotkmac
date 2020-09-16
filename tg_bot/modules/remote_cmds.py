@@ -14,73 +14,69 @@ from tg_bot.modules.helper_funcs.string_handling import extract_time
 from tg_bot.modules.helper_funcs.filters import CustomFilters
 
 RBAN_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "කණ්ඩායම් කතාබහ අක්‍රිය කරන ලදි",
+    "මූලික කණ්ඩායමකින් එය kick  ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
 }
 
 RUNBAN_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට  ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "මූලික කණ්ඩායමකින් එය kick  ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
 }
 
 RKICK_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට  ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "මූලික කණ්ඩායමකින් එය kick  ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
 }
 
 RMUTE_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට  ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "මූලික කණ්ඩායමකින් එය kick  ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
 }
 
 RUNMUTE_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට  ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "මූලික කණ්ඩායමකින් එය kick  ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
 }
 
 @run_async
@@ -89,66 +85,66 @@ def rban(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
 
     if not args:
-        message.reply_text("You don't seem to be referring to a chat/user.")
+        message.reply_text("“ඔබ සඳහන් කරන බවක් නොපෙනේ chat/user.")
         return
 
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
     elif not chat_id:
-        message.reply_text("You don't seem to be referring to a chat.")
+        message.reply_text("ඔබ කතාබහකට යොමු වූ බවක් නොපෙනේ.")
         return
 
     try:
         chat = bot.get_chat(chat_id.split()[0])
     except BadRequest as excp:
-        if excp.message == "Chat not found":
-            message.reply_text("Chat not found! Make sure you entered a valid chat ID and I'm part of that chat.")
+        if excp.message == "චැට් හමු නොවීය":
+            message.reply_text("චැට් හමු නොවීය! ඔබ වලංගු චැට් හැඳුනුම්පතක් ඇතුළත් කළ බවට වග බලා ගන්න, මම එම සංවාදයේ කොටසක් වෙමි.")
             return
         else:
             raise
 
     if chat.type == 'private':
-        message.reply_text("I'm sorry, but that's a private chat!")
+        message.reply_text("මට කණගාටුයි, නමුත් එය පෞද්ගලික කතාබහකි!")
         return
 
     if not is_bot_admin(chat, bot.id) or not chat.get_member(bot.id).can_restrict_members:
-        message.reply_text("I can't restrict people there! Make sure I'm admin and can ban users.")
+        message.reply_text("මට එහි මිනිසුන් සීමා කළ නොහැක! මම පරිපාලක බවට වග බලා ගන්න සහ පරිශීලකයින් තහනම් කළ හැකිය.")
         return
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user")
+            message.reply_text("මට මෙම පරිශීලකයා සොයා ගත නොහැක")
             return
         else:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("I really wish I could ban admins...")
+        message.reply_text("Iඇත්තටම ප්‍රාර්ථනා කරනවා මට පරිපාලකයින් තහනම් කරන්න ...")
         return
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you crazy?")
+        message.reply_text("මම තනියම යන්නෙ නෑ, ඔයාට පිස්සුද?")
         return
 
     try:
         chat.kick_member(user_id)
-        message.reply_text("Banned from chat!")
+        message.reply_text("කතාබස් කිරීම තහනම්!")
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "පිළිතුරු පණිවිඩය හමු නොවීය":
             # Do not reply
             message.reply_text('Banned!', quote=False)
         elif excp.message in RBAN_ERRORS:
             message.reply_text(excp.message)
         else:
             LOGGER.warning(update)
-            LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
+            LOGGER.exception(දෝෂය තහනම් කිරීමuser %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't ban that user.")
+            message.reply_text("හොඳයි, මට එම පරිශීලකයා තහනම් කළ නොහැක.)
 
 @run_async
 @bot_admin
@@ -156,57 +152,57 @@ def runban(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
 
     if not args:
-        message.reply_text("You don't seem to be referring to a chat/user.")
+        message.reply_text("ඔබ කතාබස් / පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
 
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
     elif not chat_id:
-        message.reply_text("You don't seem to be referring to a chat.")
+        message.reply_text("ඔබ කතාබහකට යොමු වූ බවක් නොපෙනේ.")
         return
 
     try:
         chat = bot.get_chat(chat_id.split()[0])
     except BadRequest as excp:
-        if excp.message == "Chat not found":
-            message.reply_text("Chat not found! Make sure you entered a valid chat ID and I'm part of that chat.")
+        if excp.message == "චැට් හමු නොවීය":
+            message.reply_text("චැට් හමු නොවීය! ඔබ වලංගු චැට් හැඳුනුම්පතක් ඇතුළත් කළ බවට වග බලා ගන්න, මම එම සංවාදයේ කොටසක් වෙමි.")
             return
         else:
             raise
 
     if chat.type == 'private':
-        message.reply_text("I'm sorry, but that's a private chat!")
+        message.reply_text("මට කණගාටුයි, නමුත් එය පෞද්ගලික කතාබහකි!")
         return
 
     if not is_bot_admin(chat, bot.id) or not chat.get_member(bot.id).can_restrict_members:
-        message.reply_text("I can't unrestrict people there! Make sure I'm admin and can unban users.")
+        message.reply_text("මට එහි මිනිසුන්ව පාලනය කළ නොහැක! මම පරිපාලක බවට වග බලා ගන්න සහ පරිශීලකයින් තහනම් කළ හැකිය.")
         return
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user there")
+        if excp.message == "පරිශීලකයා හමු නොවීය ":
+            message.reply_text("මට මෙම පරිශීලකයා එහි සිටින බවක් නොපෙනේ")
             return
         else:
             raise
             
     if is_user_in_chat(chat, user_id):
-        message.reply_text("Why are you trying to remotely unban someone that's already in that chat?")
+        message.reply_text("එම සංවාදයේ දැනටමත් සිටින අයෙකු දුරස්ථව තහනම් කිරීමට ඔබ උත්සාහ කරන්නේ ඇයි?")
         return
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna UNBAN myself, I'm an admin there!")
+        message.reply_text("මම UNBAN යන්නෙ නෑ, මම එහි පරිපාලකයෙක්!")
         return
 
     try:
         chat.unban_member(user_id)
-        message.reply_text("Yep, this user can join that chat!")
+        message.reply_text("ඔව්, මෙම පරිශීලකයාට එම කතාබහට සම්බන්ධ විය හැකිය!")
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "පිළිතුරු පණිවිඩය හමු නොවීය":
             # Do not reply
             message.reply_text('Unbanned!', quote=False)
         elif excp.message in RUNBAN_ERRORS:
@@ -239,7 +235,7 @@ def rkick(bot: Bot, update: Update, args: List[str]):
         chat = bot.get_chat(chat_id.split()[0])
     except BadRequest as excp:
         if excp.message == "Chat not found":
-            message.reply_text("Chat not found! Make sure you entered a valid chat ID and I'm part of that chat.")
+            message.reply_text("චැට් හමු නොවීය! ඔබ වලංගු චැට් හැඳුනුම්පතක් ඇතුළත් කළ බවට වග බලා ගන්න, මම එම සංවාදයේ කොටසක් වෙමි.")
             return
         else:
             raise
@@ -249,7 +245,7 @@ def rkick(bot: Bot, update: Update, args: List[str]):
         return
 
     if not is_bot_admin(chat, bot.id) or not chat.get_member(bot.id).can_restrict_members:
-        message.reply_text("I can't restrict people there! Make sure I'm admin and can kick users.")
+        message.reply_text("මට එහි මිනිසුන් සීමා කළ නොහැක! මම පරිපාලක බවට වග බලා ගන්න සහ පරිශීලකයින්ට පයින් ගසන්නට පුළුවන.")
         return
 
     try:
@@ -357,23 +353,23 @@ def runmute(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
 
     if not args:
-        message.reply_text("You don't seem to be referring to a chat/user.")
+        message.reply_text("ඔබ කතාබස් / පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
 
     user_id, chat_id = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
     elif not chat_id:
-        message.reply_text("You don't seem to be referring to a chat.")
+        message.reply_text("ඔබ කතාබහකට යොමු වූ බවක් නොපෙනේ.")
         return
 
     try:
         chat = bot.get_chat(chat_id.split()[0])
     except BadRequest as excp:
         if excp.message == "Chat not found":
-            message.reply_text("Chat not found! Make sure you entered a valid chat ID and I'm part of that chat.")
+            message.reply_text("චැට් හමු නොවීය! ඔබ වලංගු චැට් හැඳුනුම්පතක් ඇතුළත් කළ බවට වග බලා ගන්න, මම එම සංවාදයේ කොටසක් වෙමි.")
             return
         else:
             raise
@@ -383,14 +379,14 @@ def runmute(bot: Bot, update: Update, args: List[str]):
         return
 
     if not is_bot_admin(chat, bot.id) or not chat.get_member(bot.id).can_restrict_members:
-        message.reply_text("I can't unrestrict people there! Make sure I'm admin and can unban users.")
+        message.reply_text("මට එහි මිනිසුන්ව පාලනය කළ නොහැක! මම පරිපාලක බවට වග බලා ගන්න සහ පරිශීලකයින් තහනම් කළ හැකිය.")
         return
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user there")
+            message.reply_text("මට මෙම පරිශීලකයා එහි සිටින බවක් නොපෙනේ")
             return
         else:
             raise
@@ -398,11 +394,11 @@ def runmute(bot: Bot, update: Update, args: List[str]):
     if is_user_in_chat(chat, user_id):
        if member.can_send_messages and member.can_send_media_messages \
           and member.can_send_other_messages and member.can_add_web_page_previews:
-        message.reply_text("This user already has the right to speak in that chat.")
+        message.reply_text("මෙම කතාබහ තුළ කතා කිරීමට මෙම පරිශීලකයාට දැනටමත් අයිතියක් ඇත.")
         return
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna UNMUTE myself, I'm an admin there!")
+        message.reply_text("මම මාවම පාලනය කරන්න යන්නේ නැහැ, මම එහි පරිපාලකයෙක්! ”)
         return
 
     try:
@@ -413,16 +409,16 @@ def runmute(bot: Bot, update: Update, args: List[str]):
                                      can_add_web_page_previews=True)
         message.reply_text("Yep, this user can talk in that chat!")
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Rපිළිතුරු පණිවිඩය හමු නොවීය":
             # Do not reply
             message.reply_text('Unmuted!', quote=False)
         elif excp.message in RUNMUTE_ERRORS:
             message.reply_text(excp.message)
         else:
             LOGGER.warning(update)
-            LOGGER.exception("ERROR unmnuting user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
+            LOGGER.exception("දෝෂ ඉවත් කිරීම user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't unmute that user.")
+            message.reply_text("හොඳයි, මට එම පරිශීලකයා ඉවත් කළ නොහැක.")
 
 __help__ = ""
 
