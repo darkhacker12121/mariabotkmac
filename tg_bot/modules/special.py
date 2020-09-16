@@ -21,7 +21,7 @@ def quickscope(bot: Bot, update: Update, args: List[int]):
         chat_id = str(args[1])
         to_kick = str(args[0])
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat/user")
+        update.effective_message.reply_text("ඔබ චැට් / පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ")
     try:
         bot.kick_chat_member(chat_id, to_kick)
         update.effective_message.reply_text("Attempted banning " + to_kick + " from" + chat_id)
@@ -35,7 +35,7 @@ def quickunban(bot: Bot, update: Update, args: List[int]):
         chat_id = str(args[1])
         to_kick = str(args[0])
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat/user")
+        update.effective_message.reply_text("ඔබ චැට් / පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ")
     try:
         bot.unban_chat_member(chat_id, to_kick)
         update.effective_message.reply_text("Attempted unbanning " + to_kick + " from" + chat_id)
@@ -67,14 +67,14 @@ def snipe(bot: Bot, update: Update, args: List[str]):
         chat_id = str(args[0])
         del args[0]
     except TypeError as excp:
-        update.effective_message.reply_text("Please give me a chat to echo to!")
+        update.effective_message.reply_text("කරුණාකර මට ප්‍රතිරාවය කිරීමට චැට් එකක් දෙන්න!")
     to_send = " ".join(args)
     if len(to_send) >= 2:
         try:
             bot.sendMessage(int(chat_id), str(to_send))
         except TelegramError:
             LOGGER.warning("Couldn't send to group %s", str(chat_id))
-            update.effective_message.reply_text("Couldn't send the message. Perhaps I'm not part of that group?")
+            update.effective_message.reply_text("පණිවිඩය යැවීමට නොහැකි විය. සමහර විට මම එම කණ්ඩායමේ සාමාජිකයෙක් නොවේද?")
 
 
 @run_async
@@ -83,14 +83,14 @@ def getlink(bot: Bot, update: Update, args: List[int]):
     if args:
         chat_id = int(args[0])
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat")
+        update.effective_message.reply_text("ඔබ කතාබහකට යොමු වූ බවක් නොපෙනේ")
     chat = bot.getChat(chat_id)
     bot_member = chat.get_member(bot.id)
     if bot_member.can_invite_users:
         invitelink = bot.get_chat(chat_id).invite_link
         update.effective_message.reply_text(invitelink)
     else:
-        update.effective_message.reply_text("I don't have access to the invite link!")
+        update.effective_message.reply_text("මට ආරාධනා සබැඳියට ප්‍රවේශය නැත!")
 
 
 @bot_admin
@@ -99,33 +99,33 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
         chat_id = int(args[0])
         bot.leaveChat(chat_id)
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat")
+        update.effective_message.reply_text("ඔබ කතාබහකට යොමු වූ බවක් නොපෙනේ")
 
 __help__ = """
-**Owner only:**
-- /getlink **chatid**: Get the invite link for a specific chat.
-- /banall: Ban all members from a chat
-- /leavechat **chatid** : leave a chat
-**Sudo/owner only:**
-- /quickscope **userid** **chatid**: Ban user from chat.
-- /quickunban **userid** **chatid**: Unban user from chat.
-- /snipe **chatid** **string**: Make me send a message to a specific chat.
-- /rban **userid** **chatid** remotely ban a user from a chat
-- /runban **userid** **chatid** remotely unban a user from a chat
+**හිමිකරු පමණි:**
+- /getlink **chatid**: විශේෂිත කතාබස් සඳහා ආරාධනා සබැඳිය ලබා ගන්න.
+- /banall: සියලුම සාමාජිකයන් සංවාදයකින් තහනම් කරන්න
+- /leavechat **chatid** :කතාබස් කරන්න
+**සුඩෝ / හිමිකරු පමණි:**
+- /quickscope **userid** **chatid**: පරිශීලකයා කතාබස් කිරීමෙන් තහනම් කරන්න.
+- /quickunban **userid** **chatid**: චැට් වලින් ඉවත් කරන්න.
+- /snipe **chatid** **string**: විශේෂිත කතාබහකට මට පණිවිඩයක් යැවීමට සලස්වන්න.
+- /rban **userid** **chatid** :චැට් එකකින් පරිශීලකයෙකු දුරස්ථව තහනම් කරන්න
+- /runban **userid** **chatid** :චැට් එකකින් පරිශීලකයෙකු දුරස්ථව තහනම් කරන්න
 - /Stats: check bot's stats
-- /chatlist: get chatlist
-- /gbanlist: get gbanned users list
-- /gmutelist: get gmuted users list
+- /chatlist: චැට්ලිස්ට් ලබා ගන්න
+- /gbanlist: gbanned පරිශීලක ලැයිස්තුව ලබා ගන්න
+- /gmutelist:gmuted පරිශීලක ලැයිස්තුව ලබා ගන්න
 - Chat bans via /restrict chat_id and /unrestrict chat_id commands
-**Support user:**
-- /Gban : Global ban a user
-- /Ungban : Ungban a user
-- /Gmute : Gmute a user
-- /Ungmute : Ungmute a user
-Sudo/owner can use these commands too.
-**Users:**
-- /listsudo Gives a list of sudo users
-- /listsupport gives a list of support users
+**සහාය පරිශීලකයා:**
+- /Gban : ගෝලීය තහනමක් පරිශීලකයෙකුට
+- /Ungban : Ungban පරිශීලකයෙක්
+- /Gmute : පරිශීලකයෙකු මැලියම් කරන්න
+- /Ungmute : පරිශීලකයෙකු ඉවත් කරන්න
+Sudo/owner මෙම විධානයන් ද භාවිතා කළ හැකිය.
+**පරිශීලකයින්:**
+- /listsudo සුඩෝ භාවිතා කරන්නන්ගේ ලැයිස්තුවක් ලබා දෙයි
+- /listsupport සහාය පරිශීලකයින්ගේ ලැයිස්තුවක් ලබා දෙයි
 """
 __mod_name__ = "Special"
 
