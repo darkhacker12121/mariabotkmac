@@ -70,7 +70,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
 
 def send_to_list(bot: Bot, send_to: list, message: str, markdown=False, html=False) -> None:
     if html and markdown:
-        raise Exception("Can only send with either markdown or HTML!")
+        raise Exception("යැවිය හැක්කේ සලකුණු කිරීම හෝ HTML සමඟ පමණි!")
     for user_id in set(send_to):
         try:
             if markdown:
