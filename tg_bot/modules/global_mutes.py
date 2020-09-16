@@ -25,19 +25,19 @@ def gmute(bot: Bot, update: Update, args: List[str]):
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("මම ඔත්තු බැලුවෙමි, මගේ කුඩා ඇසෙන් ... සුඩෝ පරිශීලක යුද්ධයක්! ඇයි ඔයාලා එකිනෙකාට හරවන්නේ?")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gmute a support user! *grabs popcorn*")
+        message.reply_text("OOOH යමෙක් ආධාරක පරිශීලකයෙකු මැඩපැවැත්වීමට උත්සාහ කරයි! *පොප්කෝන් අල්ලා ගනී😎😎*")
         return
 
     if user_id == bot.id:
-        message.reply_text("-_- So funny, lets gmute myself why don't I? Nice try.")
+        message.reply_text("-_- හරිම විහිලුයි, ඇයි මම නැත්තේ? හොඳයි උත්සාහ කරන්න.")
         return
 
     try:
@@ -52,25 +52,25 @@ def gmute(bot: Bot, update: Update, args: List[str]):
 
     if sql.is_user_gmuted(user_id):
         if not reason:
-            message.reply_text("This user is already gmuted; I'd change the reason, but you haven't given me one...")
+            message.reply_text("මෙම පරිශීලකයා දැනටමත් gmuted; මම හේතුව වෙනස් කරන්නම්, නමුත් ඔබ මට එකක් දුන්නේ නැහැ ...🥺🥺")
             return
 
         success = sql.update_gmute_reason(user_id, user_chat.username or user_chat.first_name, reason)
         if success:
-            message.reply_text("This user is already gmuted; I've gone and updated the gmute reason though!")
+            message.reply_text("මෙම පරිශීලකයා දැනටමත් gmuted; මම ගොස් gmute හේතුව යාවත්කාලීන කර ඇත!")
         else:
-            message.reply_text("Do you mind trying again? I thought this person was gmuted, but then they weren't? "
+            message.reply_text("නැවත උත්සාහ කිරීමට ඔබට අවශ්‍යද? මම හිතුවේ මේ පුද්ගලයා gmuted ඇති, නමුත් පසුව ඔවුන් එසේ නොවේ? "
                                "Am very confused")
 
         return
 
-    message.reply_text("*Gets duct tape ready* 😉")
+    message.reply_text("*ඩක් ටේප් සූදානම්* 😉")
 
     muter = update.effective_user  # type: Optional[User]
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
                  "{} is gmuting user {} "
                  "because:\n{}".format(mention_html(muter.id, muter.first_name),
-                                       mention_html(user_chat.id, user_chat.first_name), reason or "No reason given"),
+                                       mention_html(user_chat.id, user_chat.first_name), reason or "කිසිදු හේතුවක් දක්වා නැත"),
                  html=True)
 
     sql.gmute_user(user_id, user_chat.username or user_chat.first_name, reason)
@@ -86,38 +86,38 @@ def gmute(bot: Bot, update: Update, args: List[str]):
         try:
             bot.restrict_chat_member(chat_id, user_id, can_send_messages=False)
         except BadRequest as excp:
-            if excp.message == "User is an administrator of the chat":
+            if excp.message == "පරිශීලකයා චැට් හි පරිපාලකයෙකි":
                 pass
-            elif excp.message == "Chat not found":
+            elif excp.message == "චැට් හමු නොවීය":
                 pass
-            elif excp.message == "Not enough rights to restrict/unrestrict chat member":
+            elif excp.message == "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා කිරීමට ප්‍රමාණවත් අයිතිවාසිකම් නොමැත":
                 pass
-            elif excp.message == "User_not_participant":
+            elif excp.message == "සහභාගිවන්නා_භාවිතා_කරන්න":
                 pass
             elif excp.message == "Peer_id_invalid":  # Suspect this happens when a group is suspended by telegram.
                 pass
-            elif excp.message == "Group chat was deactivated":
+            elif excp.message == "කණ්ඩායම් කතාබහ අක්‍රිය කරන ලදි":
                 pass
-            elif excp.message == "Need to be inviter of a user to kick it from a basic group":
+            elif excp.message == "මූලික කණ්ඩායමකින් එය පයින් ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය":
                 pass
-            elif excp.message == "Chat_admin_required":
+            elif excp.message == "චැට්_පරිපාලක_අවශ්‍යයි":
                 pass
-            elif excp.message == "Only the creator of a basic group can kick group administrators":
+            elif excp.message == "කණ්ඩායම් පරිපාලකයින්ට kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි":
                 pass
-            elif excp.message == "Method is available only for supergroups":
+            elif excp.message == "ක්‍රමය ලබා ගත හැක්කේ සුපිරි කණ්ඩායම් සඳහා පමණි":
                 pass
-            elif excp.message == "Can't demote chat creator":
+            elif excp.message == "චැට් නිර්මාතෘ පහත් කළ නොහැක":
                 pass
             else:
-                message.reply_text("Could not gmute due to: {}".format(excp.message))
-                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Could not gmute due to: {}".format(excp.message))
+                message.reply_text("නිසා gmute කිරීමට නොහැකි විය: {}".format(excp.message))
+                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "නිසා gmute කිරීමට නොහැකි විය: {}".format(excp.message))
                 sql.ungmute_user(user_id)
                 return
         except TelegramError:
             pass
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "gmute complete!")
-    message.reply_text("Person has been gmuted.")
+    message.reply_text("පුද්ගලයා gmute කර ඇත.")
 
 
 @run_async
@@ -126,24 +126,24 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
 
     user_chat = bot.get_chat(user_id)
     if user_chat.type != 'private':
-        message.reply_text("That's not a user!")
+        message.reply_text("එය පරිශීලකයෙකු නොවේ!")
         return
 
     if not sql.is_user_gmuted(user_id):
-        message.reply_text("This user is not gmuted!")
+        message.reply_text("මෙම පරිශීලකයා gmuted නොවේ!")
         return
 
     muter = update.effective_user  # type: Optional[User]
 
-    message.reply_text("I'll let {} speak again, globally.".format(user_chat.first_name))
+    message.reply_text("මම ඉඩ දෙන්නම් {} ගෝලීයව නැවත කතා කරන්න.".format(user_chat.first_name))
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
-                 "{} has ungmuted user {}".format(mention_html(muter.id, muter.first_name),
+                 "{} ඉවත් නොකළ පරිශීලකයෙකු ඇත {}".format(mention_html(muter.id, muter.first_name),
                                                    mention_html(user_chat.id, user_chat.first_name)),
                  html=True)
 
@@ -165,25 +165,25 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
                                      can_add_web_page_previews=True)
 
         except BadRequest as excp:
-            if excp.message == "User is an administrator of the chat":
+            if excp.message == "පරිශීලකයා චැට් හි පරිපාලකයෙකි":
                 pass
-            elif excp.message == "Chat not found":
+            elif excp.message == "චැට් හමු නොවීය":
                 pass
-            elif excp.message == "Not enough rights to restrict/unrestrict chat member":
+            elif excp.message == "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට ප්‍රමාණවත් අයිතිවාසිකම් නොමැත":
                 pass
-            elif excp.message == "User_not_participant":
+            elif excp.message == "පරිශීලකයා_සහභාගී_නොවෙ":
                 pass
-            elif excp.message == "Method is available for supergroup and channel chats only":
+            elif excp.message == "සුපිරි කණ්ඩායම් සහ නාලිකා කතාබස් සඳහා පමණක් ක්‍රමය තිබේ":
                 pass
-            elif excp.message == "Not in the chat":
+            elif excp.message == "චැට් එකේ නැහැ":
                 pass
-            elif excp.message == "Channel_private":
+            elif excp.message == "නාලිකාව_පුද්ගලිකයි:
                 pass
-            elif excp.message == "Chat_admin_required":
+            elif excp.message == "චැට්_පරිපාලක_අවශ්‍යයි":
                 pass
             else:
-                message.reply_text("Could not un-gmute due to: {}".format(excp.message))
-                bot.send_message(OWNER_ID, "Could not un-gmute due to: {}".format(excp.message))
+                message.reply_text("මේ නිසා ඉවත් කිරීමට නොහැකි විය: {}".format(excp.message))
+                bot.send_message(OWNER_ID, "මේ නිසා ඉවත් කිරීමට නොහැකි විය: {}".format(excp.message))
                 return
         except TelegramError:
             pass
@@ -192,7 +192,7 @@ def ungmute(bot: Bot, update: Update, args: List[str]):
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "un-gmute complete!")
 
-    message.reply_text("Person has been un-gmuted.")
+    message.reply_text("පුද්ගලයා නිරුපද්‍රිතව ඇත.")
 
 
 @run_async
@@ -200,7 +200,7 @@ def gmutelist(bot: Bot, update: Update):
     muted_users = sql.get_gmute_list()
 
     if not muted_users:
-        update.effective_message.reply_text("There aren't any gmuted users! You're kinder than I expected...")
+        update.effective_message.reply_text("Gmuted භාවිතා කරන්නන් නොමැත! මම හිතුවට වඩා ඔයා කරුණාවන්තයි ...😊😘")
         return
 
     mutefile = 'Screw these guys.\n'
@@ -212,7 +212,7 @@ def gmutelist(bot: Bot, update: Update):
     with BytesIO(str.encode(mutefile)) as output:
         output.name = "gmutelist.txt"
         update.effective_message.reply_document(document=output, filename="gmutelist.txt",
-                                                caption="Here is the list of currently gmuted users.")
+                                                caption="දැනට gmuted භාවිතා කරන්නන්ගේ ලැයිස්තුව මෙන්න.")
 
 
 def check_and_mute(bot, update, user_id, should_message=True):
@@ -247,17 +247,17 @@ def gmutestat(bot: Bot, update: Update, args: List[str]):
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
             sql.enable_gmutes(update.effective_chat.id)
-            update.effective_message.reply_text("I've enabled gmutes in this group. This will help protect you "
-                                                "from spammers, unsavoury characters, and Anirudh.")
+            update.effective_message.reply_text("මම මෙම කණ්ඩායමේ gmutes සක්‍රීය කර ඇත. මෙය ඔබව ආරක්ෂා කිරීමට උපකාරී වේ "
+                                                "අයාචිත තැපැල්, අප්‍රසන්න චරිත සහ අනිරුද් වෙතින්.")
         elif args[0].lower() in ["off", "no"]:
             sql.disable_gmutes(update.effective_chat.id)
-            update.effective_message.reply_text("I've disabled gmutes in this group. GMutes wont affect your users "
-                                                "anymore. You'll be less protected from Anirudh though!")
+            update.effective_message.reply_text("මම මෙම කණ්ඩායමේ gmutes අක්‍රීය කර ඇත. GMutes ඔබේ පරිශීලකයින්ට බලපාන්නේ නැත"
+                                                "තවදුරටත්. ඔබට අඩු ආරක්ෂාවක් ලැබෙනු ඇත!")
     else:
-        update.effective_message.reply_text("Give me some arguments to choose a setting! on/off, yes/no!\n\n"
-                                            "Your current setting is: {}\n"
-                                            "When True, any gmutes that happen will also happen in your group. "
-                                            "When False, they won't, leaving you at the possible mercy of "
+        update.effective_message.reply_text("පසුබිමක් තෝරා ගැනීමට මට තර්ක කිහිපයක් දෙන්න! on/off, yes/no!\n\n"
+                                            "ඔබගේ වර්තමාන සැකසුම: {}\n"
+                                            "සත්‍ය වූ විට, සිදුවන ඕනෑම විකාරයක් ඔබගේ කණ්ඩායම තුළ ද සිදුවනු ඇත. "
+                                            "අසත්‍ය වූ විට, ඔවුන් එසේ නොකරනු ඇත"
                                             "spammers.".format(sql.does_chat_gmute(update.effective_chat.id)))
 
 
@@ -288,11 +288,11 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
-*Admin only:*
- - /gmutestat <on/off/yes/no>: Will disable the effect of global mutes on your group, or return your current settings.
-Gmutes, also known as global mutes, are used by the bot owners to mute spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
-/gmutestat
+*පරිපාලක පමණි:*
+ - /gbanstat <on/off/yes/no>:ඔබගේ කණ්ඩායමට ගෝලීය තහනමේ බලපෑම අක්‍රීය කරනු ඇත, නැතහොත් ඔබගේ වර්තමාන සැකසුම් නැවත ලබා දෙනු ඇත.
+ගෝලීය තහනම ලෙසද හැඳින්වෙන ග්බාන්ස්, සියලුම කණ්ඩායම් හරහා අයාචිත තැපැල් තහනම් කිරීම සඳහා බොට් හිමිකරුවන් විසින් භාවිතා කරනු ලැබේ. මෙය ආරක්ෂා කිරීමට උපකාරී වේ \
+ඔබ සහ ඔබේ කණ්ඩායම් හැකි ඉක්මනින් අයාචිත තැපැල් ගංවතුර ඉවත් කිරීමෙන්. Call ඇමතීමෙන් ඒවා ඔබගේ කණ්ඩායම සඳහා අක්‍රිය කළ හැකිය
+/gbanstat
 """
 
 __mod_name__ = "Global Mute"
