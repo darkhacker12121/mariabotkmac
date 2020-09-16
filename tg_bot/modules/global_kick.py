@@ -13,19 +13,19 @@ from tg_bot.modules.helper_funcs.misc import send_to_list
 from tg_bot.modules.sql.users_sql import get_all_chats
 
 GKICK_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat",
-    "Method is available for supergroup and channel chats only",
-    "Reply message not found"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "කණ්ඩායම් කතාබහ අක්‍රිය කරන ලදි",
+    "මූලික කණ්ඩායමකින් එය පයින් ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
+    "සුපිරි කණ්ඩායම් සහ නාලිකා කතාබස් සඳහා පමණක් ක්‍රමය තිබේ",
+    "පිළිතුරු පණිවිඩය හමු නොවීය"
 }
 
 @run_async
@@ -38,22 +38,22 @@ def gkick(bot: Bot, update: Update, args: List[str]):
         if excp.message in GKICK_ERRORS:
             pass
         else:
-            message.reply_text("User cannot be Globally kicked because: {}".format(excp.message))
+            message.reply_text("පරිශීලකයාට ගෝලීයව kick ගැසිය නොහැක: {}".format(excp.message))
             return
     except TelegramError:
             pass
 
     if not user_id:
-        message.reply_text("You do not seems to be referring to a user")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ")
         return
     if int(user_id) in SUDO_USERS or int(user_id) in SUPPORT_USERS:
-        message.reply_text("OHHH! Someone's trying to gkick a sudo/support user! *Grabs popcorn*")
+        message.reply_text("ඔහ්! කවුරුහරි සූඩෝ / ආධාරක පරිශීලකයෙකුට පහර දීමට උත්සාහ කරයි!😨 *පොප්කෝන් අල්ලා ගනී*")
         return
     if int(user_id) == OWNER_ID:
-        message.reply_text("Wow! Someone's so noob that he want to gkick my owner! *Grabs Potato Chips*")
+        message.reply_text("වාව්! කවුරුහරි කොතරම් මෝඩද කියනවා නම් ඔහුට මගේ අයිතිකරුට පහර දීමට අවශ්‍යයි!😕 *අර්තාපල් චිප්ස් අල්ලා ගනී😂*")
         return
     if int(user_id) == bot.id:
-        message.reply_text("OHH... Let me kick myself.. No way... ")
+        message.reply_text("ඔහ් ... 😩මට පයින් ගහන්න දෙන්න.. නැහැ🥺...")
         return
     chats = get_all_chats()
     message.reply_text("Globally kicking user @{}".format(user_chat.username))
