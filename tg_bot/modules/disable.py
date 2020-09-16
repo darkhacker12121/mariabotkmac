@@ -78,10 +78,10 @@ if is_module_loaded(FILENAME):
                 update.effective_message.reply_text("Disabled the use of `{}`".format(disable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN)
             else:
-                update.effective_message.reply_text("That command can't be disabled")
+                update.effective_message.reply_text("එම විධානය අක්‍රිය කළ නොහැක")
 
         else:
-            update.effective_message.reply_text("What should I disable?")
+            update.effective_message.reply_text("මා අබල කළ යුත්තේ කුමක්ද?")
 
 
     @run_async
@@ -94,13 +94,13 @@ if is_module_loaded(FILENAME):
                 enable_cmd = enable_cmd[1:]
 
             if sql.enable_command(chat.id, enable_cmd):
-                update.effective_message.reply_text("Enabled the use of `{}`".format(enable_cmd),
+                update.effective_message.reply_text("භාවිතය සක්‍රීය කර ඇත `{}`".format(enable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN)
             else:
-                update.effective_message.reply_text("Is that even disabled?")
+                update.effective_message.reply_text("එය පවා ආබාධිතද?")
 
         else:
-            update.effective_message.reply_text("What should I enable?")
+            update.effective_message.reply_text("මා සක්‍රීය කළ යුත්තේ කුමක්ද?")
 
 
     @run_async
@@ -110,10 +110,10 @@ if is_module_loaded(FILENAME):
             result = ""
             for cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 result += " - `{}`\n".format(escape_markdown(cmd))
-            update.effective_message.reply_text("The following commands are toggleable:\n{}".format(result),
+            update.effective_message.reply_text("පහත දැක්වෙන විධානයන් ටොගල් කළ හැකිය:\n{}".format(result),
                                                 parse_mode=ParseMode.MARKDOWN)
         else:
-            update.effective_message.reply_text("No commands can be disabled.")
+            update.effective_message.reply_text("කිසිදු විධානයක් අක්‍රිය කළ නොහැක.")
 
 
     # do not async
@@ -125,7 +125,7 @@ if is_module_loaded(FILENAME):
         result = ""
         for cmd in disabled:
             result += " - `{}`\n".format(escape_markdown(cmd))
-        return "The following commands are currently restricted:\n{}".format(result)
+        return "පහත දැක්වෙන විධානයන් දැනට සීමා කර ඇත:\n{}".format(result)
 
 
     @run_async
@@ -149,12 +149,12 @@ if is_module_loaded(FILENAME):
     __mod_name__ = "Command disabling"
 
     __help__ = """
- - /cmds: check the current status of disabled commands
+ - /cmds: අක්‍රීය විධාන වල වත්මන් තත්වය පරීක්ෂා කරන්න
 
 *Admin only:*
- - /enable <cmd name>: enable that command
- - /disable <cmd name>: disable that command
- - /listcmds: list all possible toggleable commands
+ - /enable <cmd name>: එම විධානය සක්‍රීය කරන්න
+ - /disable <cmd name>: එම විධානය අක්‍රීය කරන්න
+ - /listcmds: ටොගල් කළ හැකි සියලු විධාන ලැයිස්තුගත කරන්න
     """
 
     DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True, filters=Filters.group)
