@@ -1,7 +1,7 @@
 if not __name__.endswith("sample_config"):
     import sys
-    print("The README is there to be read. Extend this sample config to a config file, don't just rename and change "
-          "values here. Doing that WILL backfire on you.\nBot quitting.", file=sys.stderr)
+    print("කියවීම කියවිය යුතුය. මෙම නියැදි වින්‍යාසය වින්‍යාස ගොනුවකට දිගු කරන්න, නැවත නම් කිරීම සහ වෙනස් කිරීම නොකරන්න"
+          "මෙහි අගයන්. එසේ කිරීමෙන් ඔබට ප්‍රතිප්‍රහාර එල්ල වේ.\nBot quitting.", file=sys.stderr)
     quit(1)
 
 
@@ -11,7 +11,7 @@ class Config(object):
 
     # REQUIRED
     API_KEY = ""
-    OWNER_ID = "683538773" # If you dont know, run the bot and do /id in your private chat with it
+    OWNER_ID = "1131653685" # If you dont know, run the bot and do /id in your private chat with it
     OWNER_USERNAME = "ViruZs"
 
     # RECOMMENDED
