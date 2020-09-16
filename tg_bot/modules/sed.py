@@ -64,17 +64,17 @@ def sed(bot: Bot, update: Update):
         repl, repl_with, flags = sed_result
 
         if not repl:
-            update.effective_message.reply_to_message.reply_text("You're trying to replace... "
-                                                                 "nothing with something?")
+            update.effective_message.reply_to_message.reply_text("ඔබ ආදේශ කිරීමට උත්සාහ කරනවා ..."
+                                                                 "යමක් සමඟ කිසිවක් නැද්ද?")
             return
 
         try:
             check = re.match(repl, to_fix, flags=re.IGNORECASE)
 
             if check and check.group(0).lower() == to_fix.lower():
-                update.effective_message.reply_to_message.reply_text("Hey everyone, {} is trying to make "
-                                                                     "me say stuff I don't wanna "
-                                                                     "say!".format(update.effective_user.first_name))
+                update.effective_message.reply_to_message.reply_text("🙏ආයුබෝවන්🙏 හැමෝටම, {} හදන්න උත්සාහ කරනවා "
+                                                                     "මම කියන්නේ මට අවශ්‍ය නැති දේවල් "
+                                                                     "කියන්න!".format(update.effective_user.first_name))
                 return
 
             if 'i' in flags and 'g' in flags:
@@ -87,25 +87,25 @@ def sed(bot: Bot, update: Update):
                 text = re.sub(repl, repl_with, to_fix, count=1).strip()
         except sre_constants.error:
             LOGGER.warning(update.effective_message.text)
-            LOGGER.exception("SRE constant error")
-            update.effective_message.reply_text("Do you even sed? Apparently not.")
+            LOGGER.exception("SRE නියත දෝෂයකි")
+            update.effective_message.reply_text("ඔබ පවා පොළඹවනවාද? පෙනෙන විදිහට නැහැ.")
             return
 
         # empty string errors -_-
         if len(text) >= telegram.MAX_MESSAGE_LENGTH:
-            update.effective_message.reply_text("The result of the sed command was too long for \
+            update.effective_message.reply_text("Sed විධානයේ \result ලය බොහෝ දිගු විය\
                                                  telegram!")
         elif text:
             update.effective_message.reply_to_message.reply_text(text)
 
 
 __help__ = """
- - s/<text1>/<text2>(/<flag>): Reply to a message with this to perform a sed operation on that message, replacing all \
+ - s/<text1>/<text2>(/<flag>): මේ සියල්ල සමඟ ප්‍රතිස්ථාපනය කරමින් එම පණිවුඩය මත ක්‍රියාකාරී මෙහෙයුමක් සිදු කිරීම සඳහා පණිවිඩයක් වෙත පිළිතුරු දෙන්න \
 occurrences of 'text1' with 'text2'. Flags are optional, and currently include 'i' for ignore case, 'g' for global, \
-or nothing. Delimiters include `/`, `_`, `|`, and `:`. Text grouping is supported. The resulting message cannot be \
-larger than {}.
-*Reminder:* Sed uses some special characters to make matching easier, such as these: `+*.?\\`
-If you want to use these characters, make sure you escape them!
+or nothing. Delimiters include `/`, `_`, `|`, and `:`. Tපෙළ සමූහකරණයට සහය දක්වයි. එහි ප්‍රති message ලයක් වශයෙන් ලැබෙන පණිවිඩය විය නොහැක \
+වඩා විශාලයි {}.
+*සැ.යු :* ගැලපීම පහසු කිරීම සඳහා සෙඩ් විශේෂ අක්ෂර කිහිපයක් භාවිතා කරයි, ඒවා වැනි: `+*.?\\`
+ඔබට මෙම අක්ෂර භාවිතා කිරීමට අවශ්‍ය නම්, ඔබ ඒවායින් ගැලවීමට වග බලා ගන්න!
 eg: \\?.
 """.format(telegram.MAX_MESSAGE_LENGTH)
 
