@@ -26,8 +26,8 @@ def send_rules(update, chat_id, from_pm=False):
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
         if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id, "The rules shortcut for this chat hasn't been set properly! Ask admins to "
-                                      "fix this.")
+            bot.send_message(user.id, "මෙම කතාබස් සඳහා නීති කෙටිමං නිසි ලෙස සකසා නැත! පරිපාලකයින්ගෙන් විමසන්න "
+                                      "මෙය නිවැරදි කරන්න.")
             return
         else:
             raise
@@ -38,17 +38,17 @@ def send_rules(update, chat_id, from_pm=False):
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN)
     elif from_pm:
-        bot.send_message(user.id, "The group admins haven't set any rules for this chat yet. "
-                                  "This probably doesn't mean it's lawless though...!")
+        bot.send_message(user.id, "කණ්ඩායම් පරිපාලකයින් මෙම කතාබහ සඳහා තවමත් නීති රීති සකසා නැත. "
+                                  "මෙය බොහෝ විට එය නීති විරෝධී යැයි අදහස් නොකෙරේ ...!")
     elif rules:
-        update.effective_message.reply_text("Contact me in PM to get this group's rules.",
+        update.effective_message.reply_text("මෙම කණ්ඩායමේ නීති ලබා ගැනීම සඳහා මාව PM හි අමතන්න.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="Rules",
                                                                        url="t.me/{}?start={}".format(bot.username,
                                                                                                      chat_id))]]))
     else:
-        update.effective_message.reply_text("The group admins haven't set any rules for this chat yet. "
-                                            "This probably doesn't mean it's lawless though...!")
+        update.effective_message.reply_text("කණ්ඩායම් පරිපාලකයින් මෙම කතාබහ සඳහා තවමත් නීති රීති සකසා නැත. "
+                                            "මෙය බොහෝ විට එය නීති විරෝධී යැයි අදහස් නොකෙරේ ...!")
 
 
 @run_async
@@ -64,7 +64,7 @@ def set_rules(bot: Bot, update: Update):
         markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
 
         sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("Successfully set rules for this group.")
+        update.effective_message.reply_text("මෙම කණ්ඩායම සඳහා නීති සාර්ථකව සකසන්න.")
 
 
 @run_async
@@ -72,11 +72,11 @@ def set_rules(bot: Bot, update: Update):
 def clear_rules(bot: Bot, update: Update):
     chat_id = update.effective_chat.id
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text("Successfully cleared rules!")
+    update.effective_message.reply_text("නීති සාර්ථකව ඉවත් කර ඇත!)
 
 
 def __stats__():
-    return "{} chats have rules set.".format(sql.num_chats())
+    return "{} කතාබස් වලට නීති රීති ඇත.".format(sql.num_chats())
 
 
 def __import_data__(chat_id, data):
@@ -90,15 +90,15 @@ def __migrate__(old_chat_id, new_chat_id):
 
 
 def __chat_settings__(chat_id, user_id):
-    return "This chat has had it's rules set: `{}`".format(bool(sql.get_rules(chat_id)))
+    return "මෙම කතාබහට එහි නීති රීති සකසා ඇත: `{}`".format(bool(sql.get_rules(chat_id)))
 
 
 __help__ = """
- - /rules: get the rules for this chat.
+ - /rules:මෙම කතාබහ සඳහා නීති ලබා ගන්න.
 
-*Admin only:*
- - /setrules <your rules here>: set the rules for this chat.
- - /clearrules: clear the rules for this chat.
+*පරිපාලක පමණි:*
+ - /setrules <your rules here>: මෙම කතාබහ සඳහා නීති සකසන්න.
+ - /clearrules: මෙම කතාබහ සඳහා නීති ඉවත් කරන්න.
 """
 
 __mod_name__ = "Rules"
