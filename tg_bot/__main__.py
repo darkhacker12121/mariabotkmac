@@ -26,6 +26,9 @@ hoi {}, මගේ නම {}! මා භාවිතා කරන්නේ කෙ
 
 **ඔබ ප්‍රභවයට කරන ඕනෑම වෙනස්කමක් බලපත්‍රයට අනුව ගිතුබ් මත තිබිය යුතු බව මතක තබා ගන්න.**
 
+EDIT BOT BY: KAVINDU A JEYAWARDANA(@kingdarkhunter)
+
+
 """
 
 HELP_STRINGS = """
