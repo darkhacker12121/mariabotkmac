@@ -52,9 +52,9 @@ def keyboard(bot, update):
 
     update.effective_message.reply_text("keyboard updated",
                                             reply_markup=ReplyKeyboardMarkup([[
-                                                KeyboardButton("/help - Bot Help"), 
-                                                KeyboardButton("/donate - Donate"),
-                                                KeyboardButton("/notes - Notes")],
+                                                KeyboardButton("/help - බොට් උදව්"), 
+                                                KeyboardButton("/donate - පරිත්යාග කරන්න"),
+                                                KeyboardButton("/notes -සටහන්")],
                                              [KeyboardButton(btn1)], 
                                              [KeyboardButton(btn2)],
                                              [KeyboardButton(btn3)]]))
