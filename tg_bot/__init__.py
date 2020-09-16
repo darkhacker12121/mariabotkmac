@@ -13,7 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
-    LOGGER.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
+    LOGGER.error("ඔබට අවම වශයෙන් 3.6 ක පයිතන් අනුවාදයක් තිබිය යුතුය! බහු ලක්ෂණ මේ මත රඳා පවතී. බොට් ඉවත්වීම.")
     quit(1)
 
 ENV = bool(os.environ.get('ENV', False))
@@ -23,7 +23,7 @@ if ENV:
     try:
         OWNER_ID = int(os.environ.get('OWNER_ID', None))
     except ValueError:
-        raise Exception("Your OWNER_ID env variable is not a valid integer.")
+        raise Exception("ඔබගේ OWNER_ID env විචල්‍යය වලංගු සංඛ්‍යාවක් නොවේ. ”)
 
     MESSAGE_DUMP = os.environ.get('MESSAGE_DUMP', None)
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
@@ -31,17 +31,17 @@ if ENV:
     try:
         SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
     except ValueError:
-        raise Exception("Your sudo users list does not contain valid integers.")
+        raise Exception("ඔබගේ sudo පරිශීලකයින්ගේ ලැයිස්තුවේ වලංගු සංඛ්‍යා නොමැත.")
 
     try:
         SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
     except ValueError:
-        raise Exception("Your support users list does not contain valid integers.")
+        raise Exception("ඔබගේ සහාය පරිශීලකයින්ගේ ලැයිස්තුවේ වලංගු සංඛ්‍යා නොමැත.")
 
     try:
         WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
     except ValueError:
-        raise Exception("Your whitelisted users list does not contain valid integers.")
+        raise Exception("ඔබගේ සුදු ලැයිස්තුගත පරිශීලක ලැයිස්තුවේ වලංගු සංඛ්‍යා නොමැත.")
 
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     URL = os.environ.get('URL', "")  # Does not contain token
@@ -65,7 +65,7 @@ else:
     try:
         OWNER_ID = int(Config.OWNER_ID)
     except ValueError:
-        raise Exception("Your OWNER_ID variable is not a valid integer.")
+        raise Exception("ඔබගේ OWNER_ID විචල්‍යය වලංගු සංඛ්‍යාවක් නොවේ.")
 
     MESSAGE_DUMP = Config.MESSAGE_DUMP
     OWNER_USERNAME = Config.OWNER_USERNAME
@@ -73,17 +73,17 @@ else:
     try:
         SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
     except ValueError:
-        raise Exception("Your sudo users list does not contain valid integers.")
+        raise Exception("ඔබගේ සුඩෝ පරිශීලකයින්ගේ ලැයිස්තුවේ වලංගු සංඛ්‍යා නොමැත.")
 
     try:
         SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
     except ValueError:
-        raise Exception("Your support users list does not contain valid integers.")
+        raise Exception("ඔබගේ සහාය පරිශීලකයින්ගේ ලැයිස්තුවේ වලංගු සංඛ්‍යා නොමැත.")
 
     try:
         WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
     except ValueError:
-        raise Exception("Your whitelisted users list does not contain valid integers.")
+        raise Exception("ඔබගේ සුදු ලැයිස්තුගත පරිශීලක ලැයිස්තුවේ වලංගු සංඛ්‍යා නොමැත.")
 
     WEBHOOK = Config.WEBHOOK
     URL = Config.URL
