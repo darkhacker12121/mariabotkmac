@@ -25,22 +25,22 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You'll need to either give me a username to mute, or reply to someone to be muted.")
+        message.reply_text("නිශ්ශබ්ද කිරීම සඳහා ඔබට පරිශීලක නාමයක් ලබා දීමට හෝ නිශ්ශබ්ද කිරීමට යමෙකුට පිළිතුරු දීමට ඔබට අවශ්‍ය වනු ඇත.")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not muting myself!")
+        message.reply_text("මම මා ගැනම කතා කරන්නේ නැහැ!")
         return ""
 
     member = chat.get_member(int(user_id))
 
     if member:
         if is_user_admin(chat, user_id, member=member):
-            message.reply_text("Afraid I can't stop an admin from talking!")
+            message.reply_text("බියෙන් මට පරිපාලකයෙකු කතා කිරීම නතර කළ නොහැක!")
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
-            message.reply_text("👍🏻 muted! 🤐")
+            message.reply_text("👍🏻 නිශ්ශබ්ද විය! 🤐")
             return "<b>{}:</b>" \
                    "\n#MUTE" \
                    "\n<b>Admin:</b> {}" \
@@ -49,9 +49,9 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
                                               mention_html(member.user.id, member.user.first_name))
 
         else:
-            message.reply_text("This user is already muted!")
+            message.reply_text("මෙම පරිශීලකයා දැනටමත් නිශ්ශබ්ද කර ඇත!)
     else:
-        message.reply_text("This user isn't in the chat!")
+        message.reply_text("මෙම පරිශීලකයා සංවාදයේ නොමැත!")
 
     return ""
 
@@ -67,7 +67,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You'll need to either give me a username to unmute, or reply to someone to be unmuted.")
+        message.reply_text("එක්කෝ ඔබ මට නිශ්ශබ්ද කිරීමට පරිශීලක නාමයක් ලබා දිය යුතුය, නැතහොත් නිශ්ශබ්ද වීමට යමෙකුට පිළිතුරු දිය යුතුය.")
         return ""
 
     member = chat.get_member(int(user_id))
@@ -90,8 +90,8 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                               mention_html(user.id, user.first_name),
                                               mention_html(member.user.id, member.user.first_name))
     else:
-        message.reply_text("This user isn't even in the chat, unmuting them won't make them talk more than they "
-                           "already do!")
+        message.reply_text("මෙම පරිශීලකයා කතාබස්වල පවා නොසිටින අතර, ඒවා නිශ්ක්‍රීය කිරීමෙන් ඔවුන්ට වඩා කතා කිරීමට නොහැකි වනු ඇත "
+                           "දැනටමත් කරන්න!")
 
     return ""
 
@@ -109,28 +109,28 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return ""
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user")
+        if excp.message == "පරිශීලකයා හමු නොවීය":
+            message.reply_text("මට මෙම පරිශීලකයා සොයා ගත නොහැක")
             return ""
         else:
             raise
 
     if is_user_admin(chat, user_id, member):
-        message.reply_text("I really wish I could mute admins...")
+        message.reply_text("මම ඇත්තටම ප්‍රාර්ථනා කරනවා මට පරිපාලකයින් නිශ්ශබ්ද කරන්න ... ")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna MUTE myself, are you crazy?")
+        message.reply_text("මම තනියම නිශ්ශබ්ද වෙන්නෙ නෑ, ඔයාට පිස්සුද?")
         return ""
 
     if not reason:
-        message.reply_text("You haven't specified a time to mute this user for!")
+        message.reply_text("මෙම පරිශීලකයා නිශ්ශබ්ද කිරීමට ඔබ කාලයක් නියම කර නැත!")
         return ""
 
     split_reason = reason.split(None, 1)
@@ -158,30 +158,30 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         if member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, until_date=mutetime, can_send_messages=False)
-            message.reply_text("shut up! 😠 Muted for {}!".format(time_val))
+            message.reply_text("කට වහපන්! 😠 නිශ්ශබ්ද කර ඇත {}!".format(time_val))
             return log
         else:
-            message.reply_text("This user is already muted.")
+            message.reply_text("මෙම පරිශීලකයා දැනටමත් නිශ්ශබ්ද කර ඇත.")
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "පිළිතුරු පණිවිඩය හමු නොවීය":
             # Do not reply
-            message.reply_text("shut up! 😠 Muted for {}!".format(time_val), quote=False)
+            message.reply_text("කට වහපන්! 😠 නිශ්ශබ්ද කර ඇත {}!".format(time_val), quote=False)
             return log
         else:
             LOGGER.warning(update)
-            LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
+            LOGGER.exception("දෝෂ නිශ්ශබ්ද කිරීම user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't mute that user.")
+            message.reply_text("හොඳයි, මට එම පරිශීලකයා නිශ්ශබ්ද කළ නොහැක.")
 
     return ""
 
 
 __help__ = """
-*Admin only:*
- - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
- - /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
+*පරිපාලක පමණි:*
+ - /mute <userhandle>: පරිශීලකයෙකු නිහ ces කරයි. පිළිතුරක් ලෙස භාවිතා කළ හැකිය, පිළිතුරු පරිශීලකයාට නිශ්ශබ්ද කිරීම.
+ - /tmute <userhandle> x(m/h/d): mx කාලය සඳහා පරිශීලකයෙකු භාවිතා කරයි. (හසුරුව හරහා හෝ පිළිතුරු දෙන්න). m = minutes, h = hours, d = days.
+ - /unmute <userhandle>: පරිශීලකයෙකු ඉවත් කරයි. පිළිතුරක් ලෙස භාවිතා කළ හැකිය, පිළිතුරු පරිශීලකයාට නිශ්ශබ්ද කිරීම.
 """
 
 __mod_name__ = "Mute"
