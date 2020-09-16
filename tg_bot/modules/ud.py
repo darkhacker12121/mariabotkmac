@@ -16,7 +16,7 @@ def ud(bot: Bot, update: Update):
   message.reply_text(reply_text)
 
 __help__ = """
- - /ud:{word} Type the word or expression you want to search use. like /ud telegram Word: Telegram Definition: A once-popular system of telecommunications, in which the sender would contact the telegram service and speak their [message] over the [phone]. The person taking the message would then send it, via a teletype machine, to a telegram office near the receiver's [address]. The message would then be hand-delivered to the addressee. From 1851 until it discontinued the service in 2006, Western Union was the best-known telegram service in the world.
+ - /ud:{word} ඔබට සෙවීමට අවශ්‍ය වචනය හෝ ප්‍රකාශනය ටයිප් කරන්න. මෙන් /ud telegram Word: විදුලි පණිවුඩ අර්ථ දැක්වීම: වරක් ජනප්‍රිය විදුලි සංදේශ පද්ධතියක් වන අතර, යවන්නා විදුලි පණිවුඩ සේවාව අමතා ඔවුන්ගේ කථා කරයි [message] උඩින් [phone]. පණිවුඩය ලබා ගන්නා පුද්ගලයා එය ටෙලි ටයිප් යන්ත්‍රයක් හරහා ග්‍රාහකයා අසල ඇති විදුලි පණිවුඩ කාර්යාලයකට යවනු ඇත [address]. පණිවිඩය ලිපිනකරුට භාර දෙනු ඇත. 1851 සිට 2006 දී සේවාව අත්හිටුවන තෙක් වෙස්ටර්න් යුනියන් යනු ලොව ප්‍රකට විදුලි පණිවුඩ සේවාවයි.
 """
 
 __mod_name__ = "Urban dictionary"
