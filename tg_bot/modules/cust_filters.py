@@ -103,7 +103,7 @@ def filters(bot: Bot, update: Update):
         content, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         content = content.strip()
         if not content:
-            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!")
+            msg.reply_text("සටහන් පණිවිඩයක් නොමැත - ඔබට බොත්තම් තිබිය නොහැක, එය සමඟ යාමට ඔබට පණිවිඩයක් අවශ්‍යය!")
             return
 
     elif msg.reply_to_message and msg.reply_to_message.sticker:
@@ -133,7 +133,7 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("පිළිතුරු දිය යුත්තේ කුමක් දැයි ඔබ සඳහන් කර නැත!")
         return
 
     # Add the filter
@@ -173,16 +173,16 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat_id)
 
     if not chat_filters:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text("මෙහි පෙරහන් කිසිවක් සක්‍රීය නොවේ!")
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat_id, args[1])
-            update.effective_message.reply_text("Yep, I'll stop replying to that in *{}*.".format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+            update.effective_message.reply_text("ඔව්, මම එයට පිළිතුරු දීම නවත්වමි *{}*.".format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
             raise DispatcherHandlerStop
 
-    update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.")
+    update.effective_message.reply_text("එය වත්මන් පෙරණයක් නොවේ - run /filters සියලුම ක්‍රියාකාරී පෙරහන් සඳහා.")
 
 
 @run_async
@@ -235,19 +235,19 @@ def reply_filter(bot: Bot, update: Update):
                                        disable_web_page_preview=should_preview_disabled,
                                        reply_markup=keyboard)
                 except BadRequest as excp:
-                    if excp.message == "Unsupported url protocol":
-                        message.reply_text("You seem to be trying to use an unsupported url protocol. Telegram "
-                                           "doesn't support buttons for some protocols, such as tg://. Please try "
-                                           "again, or ask in @MarieSupport for help.")
-                    elif excp.message == "Reply message not found":
+                    if excp.message == "සහාය නොදක්වන url ප්‍රොටෝකෝලය":
+                        message.reply_text("ඔබ සහාය නොදක්වන url ප්‍රොටෝකෝලයක් භාවිතා කිරීමට උත්සාහ කරන බවක් පෙනේ. විදුලි පණිවුඩය"
+                                           "වැනි සමහර ප්‍රොටෝකෝල සඳහා බොත්තම් සඳහා සහය නොදක්වයි tg://. කරුණාකර උත්සාහ කරන්න"
+                                           "නැවත, නැතහොත් ඇතුළට යන්න @cyberwordkt උදව් සඳහා.")
+                    elif excp.message == "පිළිතුරු පණිවිඩය හමු නොවීය":
                         bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
                     else:
-                        message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                           "@MarieSupport if you can't figure out why!")
-                        LOGGER.warning("Message %s could not be parsed", str(filt.reply))
-                        LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
+                        message.reply_text("මෙම සටහන වැරදි ලෙස සංයුති කර ඇති බැවින් එය යැවිය නොහැක. ඇතුලට අහන්න "
+                                           "@cyberwordkt ඇයි කියලා හිතාගන්න බැරි නම්!")
+                        LOGGER.warning("පණිවුඩය %s විග්‍රහ කළ නොහැක", str(filt.reply))
+                        LOGGER.exception("පෙරණය විග්‍රහ කිරීමට නොහැකි විය %s කතාබස් කරමින් %s", str(filt.keyword), str(chat.id))
 
             else:
                 # LEGACY - all new filters will have has_markdown set to True.
@@ -269,14 +269,14 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /filters: list all active filters in this chat.
+ - /filters: මෙම සංවාදයේ සියලුම ක්‍රියාකාරී පෙරහන් ලැයිස්තුගත කරන්න.
 
 *Admin only:*
- - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword'\
-is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
-keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter "hey there" How you \
-doin?
- - /stop <filter keyword>: stop that filter.
+ - /filter <keyword> <reply message>: මෙම කතාබහට පෙරනයක් එක් කරන්න. බොට් දැන් එම පණිවිඩයට ඕනෑම වේලාවක පිළිතුරු දෙනු ඇත 'මූලපදය'\
+සඳහන් කර ඇත. ඔබ යතුරු පදයක් සහිත ස්ටිකරයකට පිළිතුරු දුන්නොත්, බොට් එම ස්ටිකරයෙන් පිළිතුරු දෙනු ඇත. සටහන: all filter \
+මූල පද කුඩා අකුරුවල ඇත. ඔබේ මූලික පදය වාක්‍යයක් වීමට අවශ්‍ය නම්, උපුටා දැක්වීම් භාවිතා කරන්න. උදා: /filter "ඒයි මේ" ඔයාට  \
+කොහොමද?
+ - /stop <filter keyword>: එම පෙරණය නවත්වන්න.
 """
 
 __mod_name__ = "Filters"
