@@ -22,7 +22,7 @@ def afk(bot: Bot, update: Update):
         reason = ""
 
     sql.set_afk(update.effective_user.id, reason)
-    update.effective_message.reply_text("{} is away from the keyboard ! ".format(update.effective_user.first_name))
+    update.effective_message.reply_text("{} යතුරුපුවරුවේ මාර්ගයකි ! ".format(update.effective_user.first_name))
 
 
 @run_async
@@ -34,7 +34,7 @@ def no_longer_afk(bot: Bot, update: Update):
 
     res = sql.rm_afk(user.id)
     if res:
-        update.effective_message.reply_text("{} Not far from the keyboard now !".format(update.effective_user.first_name))
+        update.effective_message.reply_text("{} යතුරුපුවරුවෙන් දැන් බොහෝ දුර නොවේ !".format(update.effective_user.first_name))
 
 
 @run_async
@@ -61,17 +61,17 @@ def reply_afk(bot: Bot, update: Update):
             if sql.is_afk(user_id):
                 user = sql.check_afk_status(user_id)
                 if not user.reason:
-                    res = "{} is away from the keyboard ! reason :\n{} ".format(fst_name)
+                    res = "{} යතුරුපුවරුවේ මාර්ගයකි! reason :\n{} ".format(fst_name)
                 else:
-                    res = "{} is away from the keyboard ! reason :\n{}. ".format(fst_name, user.reason)
+                    res = "{} යතුරුපුවරුවේ මාර්ගයකි! හේතුව:\n{}. ".format(fst_name, user.reason)
                 message.reply_text(res)
 
 
 __help__ = """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
+ - /afk <reason>: ඔබ AFK ලෙස සලකුණු කරන්න.
+ - brb <reason>: afk විධානය හා සමානයි - නමුත් විධානයක් නොවේ.
 
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
+AFK ලෙස සලකුණු කළ විට, ඔබ නොමැති බව පැවසීමට පණිවිඩයක් සමඟ ඕනෑම සඳහනකට පිළිතුරු ලැබේ!
 """
 
 __mod_name__ = "AFK"
