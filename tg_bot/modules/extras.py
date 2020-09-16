@@ -8,21 +8,21 @@ from tg_bot import dispatcher
 from tg_bot.modules.disable import DisableAbleCommandHandler
 
 ABUSE_STRINGS = (
-    "Fuck off",
-    "Stfu go fuck yourself",
-    "Ur mum gey",
-    "Ur dad lesbo",
-    "Bsdk",
-    "Nigga",
-    "Ur granny tranny",
-    "you noob",
-	"Relax your Rear,ders nothing to fear,The Rape train is finally here",
-	"Stfu bc",
-	"Stfu and Gtfo U nub",
-	"GTFO bsdk"
-    "CUnt",
-    " Gay is here",
-    "Ur dad gey bc "
+    "මගුල වැඩ නැ ",
+    "ඕන උගුලක් කරගැනීම ",
+    "🙄🙄",
+    "😕😂",
+    "😶😶 ",
+    "නිග්ගා",
+    "Ur අත්තම්මා",
+    "ඔයා නෑ",
+	"😂😂",
+	"🤦‍♀️🤦‍♀️",
+	"🤳🏻🤳🏻",
+	"🧑🏻‍🦲 🧑🏻‍🦲 "
+    "👨🏻‍💻",
+    " සමලිංගිකයා මෙහි සිටී😹😹",
+    "🤘🤘 "
 )
 
 EYES = [
@@ -219,13 +219,20 @@ def abuse(bot: Bot, update: Update):
 def shrug(bot: Bot, update: Update):
     # reply to correct message
     reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
-    reply_text("¯\_(ツ)_/¯")	
+    reply_text("
+  _   _               
+ |'| |'|     ___      
+/| |_| |\   |_"_|     
+U|  _  |u    | |      
+ |_| |_|   U/| |\u    
+ //   \\.-,_|___|_,-. 
+(_") ("_)\_)-' '-(_/")	
 	
 @run_async
 def bluetext(bot: Bot, update: Update):
     # reply to correct message
     reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
-    reply_text("BLUE TEXT\n MUST CLICK\n I AM A STUPID ANIMAL THAT IS ATTRACTED TO COLORS")		
+    reply_text("BLUE TEXT\n MUST CLICK\n මම වර්ණවලට ඇලුම් කරන මෝඩ සත්ත්වයෙක්")		
 
 @run_async
 def rlg(bot: Bot, update: Update):
@@ -250,22 +257,22 @@ def table(bot: Bot, update: Update):
             if r <= 45:
                 update.message.reply_text("(╯°□°）╯彡 ┻━┻")
             elif r <= 90:
-                update.message.reply_text("Send money bsdk to buy new table to flip")
+                update.message.reply_text("පෙරළීමට නව මේසයක් මිලදී ගැනීමට bsdk මුදල් යවන්න")
             else:
-                update.message.reply_text("Go do some work instead of flippin tables you helpless fagit.")
+                update.message.reply_text("ඔබ අසරණව සිටින ෆ්ලිපින් මේස වෙනුවට යම් වැඩක් කරන්න.")
 		
 __help__ = """
- - /shrug : get shrug XD.
- - /table : get flip/unflip :v.
- - /decide : Randomly answers yes/no/maybe
- - /toss : Tosses A coin
- - /abuse : Abuses the cunt
- - /tts <any text> : Converts text to speech
- - /bluetext : check urself :V
- - /roll : Roll a dice.
- - /rlg : Join ears,nose,mouth and create an emo ;-;
- - /zal <any text> : zalgofy! your text
- Lyrics Plugin will take some moar time to come up.
+ - /shrug : shrug XD ලබා ගන්න.
+ - /table : ලබා ගන්න flip/unflip :v.
+ - /decide : අහඹු ලෙස පිළිතුරු දෙයි yes/no/maybe
+ - /toss : කාසියක් විසි කරයි
+ - /abuse : 🥱🥱
+ - /tts <any text> : පෙළ කථනය බවට පරිවර්තනය කරයි
+ - /bluetext : අපවම පරීක්ෂා කරන්න :V
+ - /roll : ඩයිස් රෝල් කරන්න.
+ - /rlg : කන්, නාසය, මුඛය හා සම්බන්ධ වී ඉමෝ එකක් සාදන්න ;-;
+ - /zal <any text> : zalgofy! ඔබේ පෙළ
+ පද රචනය ප්ලගිනය පැමිණීමට යම් කාලයක් ගතවනු ඇත.
 """
 
 __mod_name__ = "Extras"
