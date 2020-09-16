@@ -33,7 +33,7 @@ if is_module_loaded(FILENAME):
             elif result == "":
                 pass
             else:
-                LOGGER.warning("%s was set as loggable, but had no return statement.", func)
+                LOGGER.warning("%s ලොග් විය හැකි ලෙස සකසා ඇති නමුත් ආපසු ප්‍රකාශයක් නොතිබුණි.", func)
 
             return result
 
@@ -44,15 +44,15 @@ if is_module_loaded(FILENAME):
         try:
             bot.send_message(log_chat_id, result, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
-            if excp.message == "Chat not found":
-                bot.send_message(orig_chat_id, "This log channel has been deleted - unsetting.")
+            if excp.message == "චැට් හමු නොවීය":
+                bot.send_message(orig_chat_id, "මෙම ලොග් නාලිකාව මකා දමා ඇත - සැකසීම.")
                 sql.stop_chat_logging(orig_chat_id)
             else:
                 LOGGER.warning(excp.message)
                 LOGGER.warning(result)
                 LOGGER.exception("Could not parse")
 
-                bot.send_message(log_chat_id, result + "\n\nFormatting has been disabled due to an unexpected error.")
+                bot.send_message(log_chat_id, result + "\n\nඅනපේක්ෂිත දෝෂයක් හේතුවෙන් ආකෘතිකරණය අක්‍රීය කර ඇත.")
 
 
     @run_async
@@ -65,12 +65,12 @@ if is_module_loaded(FILENAME):
         if log_channel:
             log_channel_info = bot.get_chat(log_channel)
             message.reply_text(
-                "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
+                "මෙම කණ්ඩායමට එහි සියලුම ල logs ු-සටහන් යවා ඇත: {} (`{}`)".format(escape_markdown(log_channel_info.title),
                                                                          log_channel),
                 parse_mode=ParseMode.MARKDOWN)
 
         else:
-            message.reply_text("No log channel has been set for this group!")
+            message.reply_text("මෙම කණ්ඩායම සඳහා ලොග් නාලිකාවක් සකසා නොමැත!")
 
 
     @run_async
@@ -79,35 +79,35 @@ if is_module_loaded(FILENAME):
         message = update.effective_message  # type: Optional[Message]
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == chat.CHANNEL:
-            message.reply_text("Now, forward the /setlog to the group you want to tie this channel to!")
+            message.reply_text("දැන්, ඔබට මෙම නාලිකාව සම්බන්ධ කිරීමට අවශ්‍ය කණ්ඩායමට / setlog යොමු කරන්න!")
 
         elif message.forward_from_chat:
             sql.set_chat_log_channel(chat.id, message.forward_from_chat.id)
             try:
                 message.delete()
             except BadRequest as excp:
-                if excp.message == "Message to delete not found":
+                if excp.message == "මැකීමට පණිවිඩය හමු නොවීය":
                     pass
                 else:
-                    LOGGER.exception("Error deleting message in log channel. Should work anyway though.")
+                    LOGGER.exception("ලොග් නාලිකාවේ පණිවිඩය මැකීමේ දෝෂයකි. කෙසේ වෙතත් වැඩ කළ යුතුය.")
 
             try:
                 bot.send_message(message.forward_from_chat.id,
-                                 "This channel has been set as the log channel for {}.".format(
+                                 "මෙම නාලිකාව ලොග් නාලිකාව ලෙස සකසා ඇත {}.".format(
                                      chat.title or chat.first_name))
             except Unauthorized as excp:
-                if excp.message == "Forbidden: bot is not a member of the channel chat":
-                    bot.send_message(chat.id, "Successfully set log channel!")
+                if excp.message == "තහනම්: බොට් නාලිකා සංවාදයේ සාමාජිකයෙක් නොවේ":
+                    bot.send_message(chat.id, "ලොග් නාලිකාව සාර්ථකව සකසන්න!")
                 else:
-                    LOGGER.exception("ERROR in setting the log channel.")
+                    LOGGER.exception("ලොග් නාලිකාව සැකසීමේදී දෝෂයකි.")
 
-            bot.send_message(chat.id, "Successfully set log channel!")
+            bot.send_message(chat.id, "ලොග් නාලිකාව සාර්ථකව සකසන්න!")
 
         else:
-            message.reply_text("The steps to set a log channel are:\n"
-                               " - add bot to the desired channel\n"
-                               " - send /setlog to the channel\n"
-                               " - forward the /setlog to the group\n")
+            message.reply_text("ලොග් නාලිකාවක් සැකසීමේ පියවර:\n"
+                               " - අපේක්ෂිත නාලිකාවට බොට් එක් කරන්න\n"
+                               " - යවන්න /setlog නාලිකාවට\n"
+                               " - ඉදිරියට /setlog කණ්ඩායමට\n")
 
 
     @run_async
@@ -118,11 +118,11 @@ if is_module_loaded(FILENAME):
 
         log_channel = sql.stop_chat_logging(chat.id)
         if log_channel:
-            bot.send_message(log_channel, "Channel has been unlinked from {}".format(chat.title))
-            message.reply_text("Log channel has been un-set.")
+            bot.send_message(log_channel, "නාලිකාව සම්බන්ධ කර නොමැත {}".format(chat.title))
+            message.reply_text("ලොග් නාලිකාව සකසා නොමැත.")
 
         else:
-            message.reply_text("No log channel has been set yet!")
+            message.reply_text("ලොග් නාලිකාවක් තවම සකසා නැත!")
 
 
     def __stats__():
@@ -137,21 +137,21 @@ if is_module_loaded(FILENAME):
         log_channel = sql.get_chat_log_channel(chat_id)
         if log_channel:
             log_channel_info = dispatcher.bot.get_chat(log_channel)
-            return "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
+            return "මෙම කණ්ඩායමට එහි සියලුම ල logs ු-සටහන් යවා ඇත:{} (`{}`)".format(escape_markdown(log_channel_info.title),
                                                                             log_channel)
-        return "No log channel is set for this group!"
+        return "මෙම කණ්ඩායම සඳහා ලොග් නාලිකාවක් සකසා නැත!"
 
 
     __help__ = """
-*Admin only:*
-- /logchannel: get log channel info
-- /setlog: set the log channel.
-- /unsetlog: unset the log channel.
+*පරිපාලක පමණි:*
+- /logchannel: ලොග් නාලිකා තොරතුරු ලබා ගන්න
+- /setlog: ලොග් නාලිකාව සකසන්න.
+- /unsetlog:ලොග් නාලිකාව සකසන්න.
 
-Setting the log channel is done by:
-- adding the bot to the desired channel (as an admin!)
-- sending /setlog in the channel
-- forwarding the /setlog to the group
+ලොග් නාලිකාව සැකසීම සිදු කරනු ලබන්නේ:
+- අපේක්ෂිත නාලිකාවට බොට් එක් කිරීම (පරිපාලකයෙකු ලෙස!)
+- යැවීම/setlog නාලිකාවේ
+- ඉදිරියට යැවීම /setlog කණ්ඩායමට
 """
 
     __mod_name__ = "Log Channels"
