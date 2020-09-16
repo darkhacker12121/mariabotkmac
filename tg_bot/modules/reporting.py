@@ -24,11 +24,11 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
         if len(args) >= 1:
             if args[0] in ("yes", "on"):
                 sql.set_user_setting(chat.id, True)
-                msg.reply_text("Turned on reporting! You'll be notified whenever anyone reports something.")
+                msg.reply_text("වාර්තා කිරීම සක්‍රිය කර ඇත! කවුරුහරි යමක් වාර්තා කළ විට ඔබට දන්වනු ලැබේ.")
 
             elif args[0] in ("no", "off"):
                 sql.set_user_setting(chat.id, False)
-                msg.reply_text("Turned off reporting! You wont get any reports.")
+                msg.reply_text("වාර්තා කිරීම අක්‍රියයි! ඔබට කිසිදු වාර්තාවක් ලැබෙන්නේ නැත.")
         else:
             msg.reply_text("Your current report preference is: `{}`".format(sql.user_should_report(chat.id)),
                            parse_mode=ParseMode.MARKDOWN)
@@ -37,12 +37,12 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
         if len(args) >= 1:
             if args[0] in ("yes", "on"):
                 sql.set_chat_setting(chat.id, True)
-                msg.reply_text("Turned on reporting! Admins who have turned on reports will be notified when /report "
-                               "or @admin are called.")
+                msg.reply_text("වාර්තා කිරීම සක්‍රිය කර ඇත! වාර්තා සක්‍රිය කර ඇති පරිපාලකයින්ට කවදාදැයි දැනුම් දෙනු ලැබේ /report "
+                               "හෝ @admin ලෙස හැඳින්වේ.")
 
             elif args[0] in ("no", "off"):
                 sql.set_chat_setting(chat.id, False)
-                msg.reply_text("Turned off reporting! No admins will be notified on /report or @admin.")
+                msg.reply_text("වාර්තා කිරීම අක්‍රියයි! කිසිදු පරිපාලකවරයෙකුට දැනුම් දෙනු නොලැබේ /report or @admin.")
         else:
             msg.reply_text("This chat's current setting is: `{}`".format(sql.chat_should_report(chat.id)),
                            parse_mode=ParseMode.MARKDOWN)
@@ -100,7 +100,7 @@ def report(bot: Bot, update: Update) -> str:
                 except Unauthorized:
                     pass
                 except BadRequest as excp:  # TODO: cleanup exceptions
-                    LOGGER.exception("Exception while reporting user")
+                    LOGGER.exception("පරිශීලකයා වාර්තා කිරීමේදී ව්‍යතිරේකය")
         return msg
 
     return ""
@@ -111,26 +111,26 @@ def __migrate__(old_chat_id, new_chat_id):
 
 
 def __chat_settings__(chat_id, user_id):
-    return "This chat is setup to send user reports to admins, via /report and @admin: `{}`".format(
+    return "මෙම කතාබස් මඟින් පරිශීලක වාර්තා පරිපාලකවරුන්ට යැවීමට සකසා ඇත/report and @admin: `{}`".format(
         sql.chat_should_report(chat_id))
 
 
 def __user_settings__(user_id):
-    return "You receive reports from chats you're admin in: `{}`.\nToggle this with /reports in PM.".format(
+    return "ඔබ පරිපාලක වන කතාබස් වලින් ඔබට වාර්තා ලැබෙනු ඇත: `{}`.\nමෙය ටොගල කරන්න /reports in PM.".format(
         sql.user_should_report(user_id))
 
 
 __mod_name__ = "Reporting"
 
 __help__ = """
- - /report <reason>: reply to a message to report it to admins.
- - @admin: reply to a message to report it to admins.
-NOTE: neither of these will get triggered if used by admins
+ - /report <reason>: පණිවිඩයක් පරිපාලකවරුන්ට වාර්තා කිරීමට පිළිතුරු දෙන්න.
+ - @admin: පණිවිඩයක් පරිපාලකවරුන්ට වාර්තා කිරීමට පිළිතුරු දෙන්න.
+සටහන:පරිපාලකයින් විසින් භාවිතා කරන්නේ නම් මේ දෙකම අවුලුවනු නොලැබේ
 
-*Admin only:*
- - /reports <on/off>: change report setting, or view current status.
-   - If done in pm, toggles your status.
-   - If in chat, toggles that chat's status.
+*පරිපාලක පමණි:*
+ - /reports <on/off>: වාර්තා සැකසුම වෙනස් කරන්න, නැතහොත් වත්මන් තත්වය බලන්න.
+   - Ipm සිදු කළහොත්, ඔබගේ තත්වය ටොගල් කරයි.
+   - කතාබස් කරන්නේ නම්, එම කතාබස් තත්ත්වය ටොගල් කරයි.
 """
 
 REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group)
