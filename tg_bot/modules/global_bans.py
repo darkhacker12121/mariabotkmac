@@ -18,28 +18,28 @@ from tg_bot.modules.sql.users_sql import get_all_chats
 GBAN_ENFORCE_GROUP = 6
 
 GBAN_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Peer_id_invalid",
-    "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private",
-    "Not in the chat"
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "කණ්ඩායම් කතාබහ අක්‍රිය කරන ලදි",
+    "මූලික කණ්ඩායමකින් එය පයින් ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
+    "කණ්ඩායම් පරිපාලකයින්ට Kick ගැසිය හැක්කේ මූලික කණ්ඩායමක නිර්මාතෘට පමණි",
+    "නාලිකාව_පුද්ගලිකයි",
+    "චැට් එකේ නැහැ"
 }
 
 UNGBAN_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Method is available for supergroup and channel chats only",
-    "Not in the chat",
-    "Channel_private",
-    "Chat_admin_required",
+    "පරිශීලකයා චැට් හි පරිපාලකයෙකි",
+    "චැට් හමු නොවීය",
+    "චැට් සාමාජිකයාව සීමා කිරීමට / සීමා නොකිරීමට ප්‍රමාණවත් අයිතිවාසිකම් නොමැත",
+    "පරිශීලකයා_සහභාගී_නොවෙ ",
+    "තුල්‍ය _ැඳුනුම්පත_අවලංගුය",
+    "කණ්ඩායම් කතාබහ අක්‍රිය කරන ලදි",
+    "මූලික කණ්ඩායමකින් එය පයින් ගැසීමට පරිශීලකයෙකුගේ ආරාධිතයා විය යුතුය",
+    "චැට්_පරිපාලක_අවශ්‍යයි",
 }
 
 
@@ -50,19 +50,19 @@ def gban(bot: Bot, update: Update, args: List[str]):
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("මම ඔත්තු බැලුවෙමි, මගේ කුඩා ඇසෙන් ... සුඩෝ පරිශීලක යුද්ධයක්! ඇයි ඔයාලා එකිනෙකාට හරවන්නේ?")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
+        message.reply_text("OOOH යමෙක් ආධාරක පරිශීලකයෙකු අල්ලා ගැනීමට උත්සාහ කරයි! *මත් එක්ක ඒවා නම් බැ මහත්තයෝ 😎😎*")
         return
 
     if user_id == bot.id:
-        message.reply_text("-_- So funny, lets gban myself why don't I? Nice try.")
+        message.reply_text("-_- හරිම විහිලුයි, ඇයි මම නැත්තේ? හොඳයි උත්සාහ කරන්න.")
         return
 
     try:
@@ -72,22 +72,22 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
 
     if user_chat.type != 'private':
-        message.reply_text("That's not a user!")
+        message.reply_text("එය පරිශීලකයෙකු නොවේ!")
         return
 
     if sql.is_user_gbanned(user_id):
         if not reason:
-            message.reply_text("This user is already gbanned; I'd change the reason, but you haven't given me one...")
+            message.reply_text("මෙම පරිශීලකයා දැනටමත් gbanned; මම හේතුව වෙනස් කරන්නම්, නමුත් ඔබ මට එකක් දුන්නේ නැහැ ...🥺😩")
             return
 
         old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
         if old_reason:
-            message.reply_text("This user is already gbanned, for the following reason:\n"
+            message.reply_text("පහත සඳහන් හේතුව නිසා මෙම පරිශීලකයා දැනටමත් gbanned කර ඇත:\n"
                                "<code>{}</code>\n"
-                               "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
+                               "මම ගොස් ඔබගේ නව හේතුව සමඟ එය යාවත්කාලීන කර ඇත!".format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
         else:
-            message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
+            message.reply_text("මෙම පරිශීලකයා දැනටමත් අවහිර කර ඇත, නමුත් කිසිදු හේතුවක් සකසා නැත; මම ගොස් එය යාවත්කාලීන කර ඇත!")
 
         return
 
@@ -122,15 +122,15 @@ def gban(bot: Bot, update: Update, args: List[str]):
             if excp.message in GBAN_ERRORS:
                 pass
             else:
-                message.reply_text("Could not gban due to: {}".format(excp.message))
-                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "Could not gban due to: {}".format(excp.message))
+                message.reply_text("මේ නිසා gban කිරීමට නොහැකි විය: {}".format(excp.message))
+                send_to_list(bot, SUDO_USERS + SUPPORT_USERS, "මේ නිසා gban කිරීමට නොහැකි විය: {}".format(excp.message))
                 sql.ungban_user(user_id)
                 return
         except TelegramError:
             pass
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, 
-                  "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
+                  "{} hසාර්ථකව ගැබ් කර ඇති පරිදි!".format(mention_html(user_chat.id, user_chat.first_name)),
                 html=True)
     message.reply_text("Person has been gbanned.")
 
@@ -141,21 +141,21 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("ඔබ පරිශීලකයෙකු වෙත යොමු වන බවක් නොපෙනේ.")
         return
 
     user_chat = bot.get_chat(user_id)
     if user_chat.type != 'private':
-        message.reply_text("That's not a user!")
+        message.reply_text("එය පරිශීලකයෙකු නොවේ!")
         return
 
     if not sql.is_user_gbanned(user_id):
-        message.reply_text("This user is not gbanned!")
+        message.reply_text("මෙම පරිශීලකයා gbanned නොවේ!")
         return
 
     banner = update.effective_user  # type: Optional[User]
 
-    message.reply_text("I pardon {}, globally with a second chance.".format(user_chat.first_name))
+    message.reply_text("මම සමාව දෙනවා {}, ගෝලීය වශයෙන් දෙවන අවස්ථාව සමඟ.".format(user_chat.first_name))
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
                  "<b>Regression of Global Ban</b>" \
@@ -185,8 +185,8 @@ def ungban(bot: Bot, update: Update, args: List[str]):
             if excp.message in UNGBAN_ERRORS:
                 pass
             else:
-                message.reply_text("Could not un-gban due to: {}".format(excp.message))
-                bot.send_message(OWNER_ID, "Could not un-gban due to: {}".format(excp.message))
+                message.reply_text("නිසා un-gban කිරීමට නොහැකි විය: {}".format(excp.message))
+                bot.send_message(OWNER_ID, "නිසා un-gban කිරීමට නොහැකි විය: {}".format(excp.message))
                 return
         except TelegramError:
             pass
@@ -194,11 +194,11 @@ def ungban(bot: Bot, update: Update, args: List[str]):
     sql.ungban_user(user_id)
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, 
-                  "{} has been pardoned from gban!".format(mention_html(user_chat.id, 
+                  "{} gban වෙතින් සමාව ලැබී ඇත!".format(mention_html(user_chat.id, 
                                                                          user_chat.first_name)),
                   html=True)
 
-    message.reply_text("This person has been un-gbanned and pardon is granted!")
+    message.reply_text("මෙම පුද්ගලයාට තහනම් කර ඇති අතර සමාව දෙනු ලැබේ!")
 
 
 @run_async
@@ -206,7 +206,7 @@ def gbanlist(bot: Bot, update: Update):
     banned_users = sql.get_gban_list()
 
     if not banned_users:
-        update.effective_message.reply_text("There aren't any gbanned users! You're kinder than I expected...")
+        update.effective_message.reply_text("Gbanned භාවිතා කරන්නන් නොමැත! මම හිතුවට වඩා ඔයා කරුණාවන්තයි ...🤗🥰")
         return
 
     banfile = 'Screw these guys.\n'
@@ -218,14 +218,14 @@ def gbanlist(bot: Bot, update: Update):
     with BytesIO(str.encode(banfile)) as output:
         output.name = "gbanlist.txt"
         update.effective_message.reply_document(document=output, filename="gbanlist.txt",
-                                                caption="Here is the list of currently gbanned users.")
+                                                caption="දැනට gbanned භාවිතා කරන්නන්ගේ ලැයිස්තුව මෙන්න.")
 
 
 def check_and_ban(update, user_id, should_message=True):
     if sql.is_user_gbanned(user_id):
         update.effective_chat.kick_member(user_id)
         if should_message:
-            update.effective_message.reply_text("This is a bad person, they shouldn't be here!")
+            update.effective_message.reply_text("මේක නරක පුද්ගලයෙක්, ඔවුන් මෙහි නොසිටිය යුතුයි!")
 
 
 @run_async
@@ -256,18 +256,18 @@ def gbanstat(bot: Bot, update: Update, args: List[str]):
     if len(args) > 0:
         if args[0].lower() in ["on", "yes"]:
             sql.enable_gbans(update.effective_chat.id)
-            update.effective_message.reply_text("I've enabled gbans in this group. This will help protect you "
-                                                "from spammers, unsavoury characters, and the biggest trolls.")
+            update.effective_message.reply_text("මම මෙම කණ්ඩායමේ gbans සක්‍රීය කර ඇත. මෙය ඔබව ආරක්ෂා කිරීමට උපකාරී වේ "
+                                                "අයාචිත තැපැල්, අප්‍රසන්න චරිත සහ විශාලතම ට්‍රෝලර් වලින්.")
         elif args[0].lower() in ["off", "no"]:
             sql.disable_gbans(update.effective_chat.id)
-            update.effective_message.reply_text("I've disabled gbans in this group. GBans wont affect your users "
-                                                "anymore. You'll be less protected from any trolls and spammers "
-                                                "though!")
+            update.effective_message.reply_text("මම මෙම කණ්ඩායමේ gbans අක්‍රීය කර ඇත. GBans ඔබගේ පරිශීලකයින්ට බලපාන්නේ නැත "
+                                                "තවදුරටත්. ඕනෑම ට්‍රෝලර් සහ ස්පෑම්කරුවන්ගෙන් ඔබව අඩු ආරක්ෂාවක් ලැබෙනු ඇත "
+                                                "නමුත්!")
     else:
-        update.effective_message.reply_text("Give me some arguments to choose a setting! on/off, yes/no!\n\n"
-                                            "Your current setting is: {}\n"
-                                            "When True, any gbans that happen will also happen in your group. "
-                                            "When False, they won't, leaving you at the possible mercy of "
+        update.effective_message.reply_text("Gපසුබිමක් තෝරා ගැනීමට මට තර්ක කිහිපයක් ඉදිරිපත් කරන්න! on/off, yes/no!\n\n"
+                                            "ඔබගේ වර්තමාන සැකසුම: {}\n"
+                                            "සත්‍ය වූ විට, සිදුවන ඕනෑම gban ඔබේ කණ්ඩායම තුළ ද සිදුවනු ඇත."
+                                            "අසත්‍ය වූ විට, ඔවුන් එසේ නොකරනු ඇත "
                                             "spammers.".format(sql.does_chat_gban(update.effective_chat.id)))
 
 
@@ -298,11 +298,11 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
-*Admin only:*
- - /gbanstat <on/off/yes/no>: Will disable the effect of global bans on your group, or return your current settings.
+*පරිපාලක පමණි:*
+ - /gbanstat <on/off/yes/no>:ඔබගේ කණ්ඩායමට ගෝලීය තහනමේ බලපෑම අක්‍රීය කරනු ඇත, නැතහොත් ඔබගේ වර්තමාන සැකසුම් නැවත ලබා දෙනු ඇත.
 
-Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
+ගෝලීය තහනම ලෙසද හැඳින්වෙන ග්බාන්ස්, සියලුම කණ්ඩායම් හරහා අයාචිත තැපැල් තහනම් කිරීම සඳහා බොට් හිමිකරුවන් විසින් භාවිතා කරනු ලැබේ. මෙය ආරක්ෂා කිරීමට උපකාරී වේ \
+ඔබ සහ ඔබේ කණ්ඩායම් හැකි ඉක්මනින් අයාචිත තැපැල් ගංවතුර ඉවත් කිරීමෙන්. Call ඇමතීමෙන් ඒවා ඔබගේ කණ්ඩායම සඳහා අක්‍රිය කළ හැකිය
 /gbanstat
 """
 
