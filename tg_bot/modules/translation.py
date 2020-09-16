@@ -49,7 +49,7 @@ def translate(bot: Bot, update: Update):
 
 
 __help__ = """
- - /t: while replying to a message, will reply with a grammar corrected version
+ - /t: පණිවිඩයකට පිළිතුරු දෙන අතරම, ව්‍යාකරණ නිවැරදි කරන ලද අනුවාදයකින් පිළිතුරු දෙනු ඇත
 """
 
 __mod_name__ = "Translator"
