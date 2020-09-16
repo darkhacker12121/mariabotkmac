@@ -30,22 +30,22 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                 try:
                     bot.deleteMessage(chat.id, m_id)
                 except BadRequest as err:
-                    if err.message == "Message can't be deleted":
-                        bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
-                                                  "not have delete rights, or this might not be a supergroup.")
+                    if err.message == "පණිවිඩය මකා දැමිය නොහැක":
+                        bot.send_message(chat.id, "සියලුම පණිවිඩ මකා දැමිය නොහැක. පණිවිඩ පරණ විය හැකිය, සමහර විට "
+                                                  "මකාදැමීමේ අයිතිවාසිකම් නොමැත, නැතහොත් මෙය සුපිරි කණ්ඩායමක් නොවිය හැකිය.")
 
-                    elif err.message != "Message to delete not found":
-                        LOGGER.exception("Error while purging chat messages.")
+                    elif err.message != "මැකීමට පණිවිඩය හමු නොවීය":
+                        LOGGER.exception("චැට් පණිවිඩ පිරිසිදු කිරීමේදී දෝෂයකි.")
 
             try:
                 msg.delete()
             except BadRequest as err:
-                if err.message == "Message can't be deleted":
-                    bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
-                                              "not have delete rights, or this might not be a supergroup.")
+                if err.message == "පණිවිඩය මකා දැමිය නොහැක":
+                    bot.send_message(chat.id, "සියලුම පණිවිඩ මකා දැමිය නොහැක. පණිවිඩ පරණ විය හැකිය, සමහර විට "
+                                              "මකාදැමීමේ අයිතිවාසිකම් නොමැත, නැතහොත් මෙය සුපිරි කණ්ඩායමක් නොවිය හැකිය.")
 
-                elif err.message != "Message to delete not found":
-                    LOGGER.exception("Error while purging chat messages.")
+                elif err.message != "මැකීමට පණිවිඩය හමු නොවීය":
+                    LOGGER.exception("චැට් පණිවිඩ පිරිසිදු කිරීමේදී දෝෂයකි.")
 
             return "<b>{}:</b>" \
                    "\n#PURGE" \
@@ -55,7 +55,7 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                                                                delete_to - message_id)
 
     else:
-        msg.reply_text("Reply to a message to select where to start purging from.")
+        msg.reply_text("පිරිසිදු කිරීම ආරම්භ කළ යුත්තේ කොතැනින්ද යන්න තේරීමට පණිවිඩයකට පිළිතුරු දෙන්න.")
 
     return ""
 
@@ -76,16 +76,16 @@ def del_message(bot: Bot, update: Update) -> str:
                    "\nMessage deleted.".format(html.escape(chat.title),
                                                mention_html(user.id, user.first_name))
     else:
-        update.effective_message.reply_text("Whadya want to delete?")
+        update.effective_message.reply_text("Wමකා දැමීමට අවශ්‍යද?")
 
     return ""
 
 
 __help__ = """
-*Admin only:*
- - /del: deletes the message you replied to
- - /purge: deletes all messages between this and the replied to message.
- - /purge <integer X>: deletes the replied message, and X messages following it.
+*පරිපාලක පමණි:*
+ - /del: ඔබ පිළිතුරු දුන් පණිවිඩය මකා දමයි
+ - /purge: මේ හා පණිවිඩයට පිළිතුරු දුන් අතර ඇති සියලුම පණිවිඩ මකා දමයි.
+ - /purge <integer X>: පිළිතුරු දුන් පණිවිඩය මකා දමයි, සහ X පණිවිඩ එය අනුගමනය කරයි.
 """
 
 __mod_name__ = "Purges"
