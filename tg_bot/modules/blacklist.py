@@ -37,7 +37,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     split_text = split_message(filter_list)
     for text in split_text:
         if text == BASE_BLACKLIST_STRING:
-            msg.reply_text("There are no blacklisted messages here!")
+            msg.reply_text("මෙහි අසාදු ලේඛණගත පණිවිඩ නොමැත!")
             return
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
@@ -63,7 +63,7 @@ def add_blacklist(bot: Bot, update: Update):
                 "Added <code>{}</code> triggers to the blacklist.".format(len(to_blacklist)), parse_mode=ParseMode.HTML)
 
     else:
-        msg.reply_text("Tell me which words you would like to remove from the blacklist.")
+        msg.reply_text("අසාදු ලේඛනයෙන් ඉවත් කිරීමට ඔබ කැමති වචන මොනවාදැයි මට කියන්න.")
 
 
 @run_async
@@ -86,7 +86,7 @@ def unblacklist(bot: Bot, update: Update):
                 msg.reply_text("Removed <code>{}</code> from the blacklist!".format(html.escape(to_unblacklist[0])),
                                parse_mode=ParseMode.HTML)
             else:
-                msg.reply_text("This isn't a blacklisted trigger...!")
+                msg.reply_text("මෙය අසාදු ලේඛණගත කළ ප්‍රේරකයක් නොවේ ...!")
 
         elif successful == len(to_unblacklist):
             msg.reply_text(
@@ -95,16 +95,16 @@ def unblacklist(bot: Bot, update: Update):
 
         elif not successful:
             msg.reply_text(
-                "None of these triggers exist, so they weren't removed.".format(
+                "මෙම ප්‍රේරක කිසිවක් නොපවතින බැවින් ඒවා ඉවත් නොකෙරුණි.".format(
                     successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
 
         else:
             msg.reply_text(
                 "Removed <code>{}</code> triggers from the blacklist. {} did not exist, "
-                "so were not removed.".format(successful, len(to_unblacklist) - successful),
+                "එබැවින් ඉවත් නොකළේය.".format(successful, len(to_unblacklist) - successful),
                 parse_mode=ParseMode.HTML)
     else:
-        msg.reply_text("Tell me which words you would like to remove from the blacklist.")
+        msg.reply_text("අසාදු ලේඛනයෙන් ඉවත් කිරීමට ඔබ කැමති වචන මොනවාදැයි මට කියන්න.")
 
 
 @run_async
@@ -123,10 +123,10 @@ def del_blacklist(bot: Bot, update: Update):
             try:
                 message.delete()
             except BadRequest as excp:
-                if excp.message == "Message to delete not found":
+                if excp.message == "මැකීමට පණිවිඩය හමු නොවීය":
                     pass
                 else:
-                    LOGGER.exception("Error while deleting blacklist message.")
+                    LOGGER.exception("අසාදු ලේඛණ පණිවිඩය මැකීමේදී දෝෂයකි.")
             break
 
 
@@ -147,19 +147,19 @@ def __stats__():
 __mod_name__ = "Word Blacklists"
 
 __help__ = """
-Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
-the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!
+සමහර ප්‍රේරක සමූහයක් තුළ පැවසීම වැළැක්වීමට අසාදු ලේඛණ භාවිතා කරයි. ප්‍රේරකය සඳහන් කරන ඕනෑම වේලාවක, \
+පණිවිඩය වහාම මකා දැමෙනු ඇත. හොඳ සංයෝජනයක් සමහර විට මෙය අනතුරු ඇඟවීමේ පෙරහන් සමඟ සම්බන්ධ කිරීමකි!
 
-*NOTE:* blacklists do not affect group admins.
+*සටහන:* අසාදු ලේඛණ කණ්ඩායම් පරිපාලකයින්ට බලපාන්නේ නැත.
 
- - /blacklist: View the current blacklisted words.
+ - /blacklist: දැනට ලැයිස්තුගත කර ඇති වචන බලන්න.
 
 *Admin only:*
- - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
-lines will allow you to add multiple triggers.
- - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
-multiple triggers at once.
- - /rmblacklist <triggers>: Same as above.
+ - /addblacklist <triggers>: අසාදු ලේඛනයට ප්‍රේරකයක් එක් කරන්න. සෑම පේළියක්ම එක් ප්‍රේරකයක් ලෙස සලකනු ලැබේ, එබැවින් වෙනස් using භාවිතා කිරීම
+පේළි මඟින් ඔබට බහු ප්‍රේරක එකතු කිරීමට ඉඩ ලබා දේ.
+ - /unblacklist <triggers>: අසාදු ලේඛනයෙන් ප්‍රේරක ඉවත් කරන්න. එකම නව රේඛා තර්කනය මෙහි අදාළ වේ, එවිට ඔබට remove ඉවත් කළ හැකිය
+එකවර බහු ප්‍රේරක.
+ - /rmblacklist <triggers>: ඉහත ආකාරයටම.
 """
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True,
