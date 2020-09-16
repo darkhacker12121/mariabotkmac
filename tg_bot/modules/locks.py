@@ -106,7 +106,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=True)
-                message.reply_text("Locked {} messages for all non-admins!".format(args[0]))
+                message.reply_text("අගුළු දමා ඇත {} සියලුම පරිපාලකයින් නොවන අයට පණිවිඩ! ”.format(args[0]))
 
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
@@ -128,10 +128,10 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                                                           mention_html(user.id, user.first_name), args[0])
 
             else:
-                message.reply_text("What are you trying to lock...? Try /locktypes for the list of lockables")
+                message.reply_text("ඔබ අගුලු දැමීමට උත්සාහ කරන්නේ කුමක්ද ...? අගුළු දැමීමේ ලැයිස්තුව සඳහා / ලොක් ටයිප් උත්සාහ කරන්න")
 
     else:
-        message.reply_text("I'm not an administrator, or haven't got delete rights.")
+        message.reply_text("Iමම පරිපාලකයෙක් නොවේ, හෝ මකාදැමීමේ අයිතිවාසිකම් ලබාගෙන නොමැත.")
 
     return ""
 
@@ -173,7 +173,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                 elif args[0] == "all":
                     unrestr_members(bot, chat.id, members, True, True, True, True)
                 """
-                message.reply_text("Unlocked {} for everyone!".format(args[0]))
+                message.reply_text("අගුළු හරින ලදි {} සියල්ලන්ම සඳහා!".format(args[0]))
 
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
@@ -181,10 +181,10 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
                                                             mention_html(user.id, user.first_name), args[0])
             else:
-                message.reply_text("What are you trying to unlock...? Try /locktypes for the list of lockables")
+                message.reply_text("ඔබ අගුළු ඇරීමට උත්සාහ කරන්නේ කුමක්ද ...? ලොකබල් ලැයිස්තුව සඳහා / ලොක් ටයිප් උත්සාහ කරන්න")
 
         else:
-            bot.sendMessage(chat.id, "What are you trying to unlock...?")
+            bot.sendMessage(chat.id, "ඔබ අගුළු ඇරීමට උත්සාහ කරන්නේ කුමක්ද ...?")
 
     return ""
 
@@ -202,20 +202,20 @@ def del_lockables(bot: Bot, update: Update):
                 for new_mem in new_members:
                     if new_mem.is_bot:
                         if not is_bot_admin(chat, bot.id):
-                            message.reply_text("I see a bot, and I've been told to stop them joining... "
-                                               "but I'm not admin!")
+                            message.reply_text("මට බොට් එකක් පෙනේ, ඔවුන් මට සම්බන්ධ වීම නවත්වන ලෙස මට පවසා ඇත ... "
+                                               "නමුත් මම පරිපාලක නොවේ!")
                             return
 
                         chat.kick_member(new_mem.id)
-                        message.reply_text("Only admins are allowed to add bots to this chat! Get outta here.")
+                        message.reply_text("මෙම කතාබහට බොට්ස් එක් කිරීමට පරිපාලකයින්ට පමණක් අවසර ඇත! මෙතනින් යන්න.")
             else:
                 try:
                     message.delete()
                 except BadRequest as excp:
-                    if excp.message == "Message to delete not found":
+                    if excp.message == "මැකීමට පණිවිඩය හමු නොවීය":
                         pass
                     else:
-                        LOGGER.exception("ERROR in lockables")
+                        LOGGER.exception("අගුළු දැමීමේ දෝෂයකි")
 
             break
 
@@ -230,10 +230,10 @@ def rest_handler(bot: Bot, update: Update):
             try:
                 msg.delete()
             except BadRequest as excp:
-                if excp.message == "Message to delete not found":
+                if excp.message == "මැකීමට පණිවිඩය හමු නොවීය":
                     pass
                 else:
-                    LOGGER.exception("ERROR in restrictions")
+                    LOGGER.exception("සීමාවන්හි දෝෂයකි")
             break
 
 
@@ -241,9 +241,9 @@ def build_lock_message(chat_id):
     locks = sql.get_locks(chat_id)
     restr = sql.get_restr(chat_id)
     if not (locks or restr):
-        res = "There are no current locks in this chat."
+        res = "මෙම සංවාදයේ වත්මන් අගුල් නොමැත."
     else:
-        res = "These are the locks in this chat:"
+        res = "මෙම සංවාදයේ අගුල් මේවා ය:"
         if locks:
             res += "\n - sticker = `{}`" \
                    "\n - audio = `{}`" \
@@ -289,18 +289,18 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /locktypes: a list of possible locktypes
+ - /locktypes: විය හැකි අගුළු ලැයිස්තුවක්
 
 *Admin only:*
- - /lock <type>: lock items of a certain type (not available in private)
- - /unlock <type>: unlock items of a certain type (not available in private)
- - /locks: the current list of locks in this chat.
+ - /lock <type>: කිසියම් වර්ගයක අගුළු අයිතම (පුද්ගලිකව ලබාගත නොහැක)
+ - /unlock <type>: කිසියම් වර්ගයක අයිතම අගුළු ඇරීම (පුද්ගලිකව ලබාගත නොහැක)
+ - /locks: මෙම සංවාදයේ වත්මන් අගුල් ලැයිස්තුව.
 
-Locks can be used to restrict a group's users.
-eg:
-Locking urls will auto-delete all messages with urls which haven't been whitelisted, locking stickers will delete all \
-stickers, etc.
-Locking bots will stop non-admins from adding bots to the chat.
+කණ්ඩායමේ පරිශීලකයින් සීමා කිරීම සඳහා අගුල් භාවිතා කළ හැකිය.
+උදා:
+යූආර්එල් අගුළු දැමීම සුදු ලැයිස්තුගත කර නොමැති යූආර්එල්එස් සමඟ සියලුම පණිවිඩ ස්වයංක්‍රීයව මකා දමනු ඇත, ස්ටිකර් අගුළු දැමීම සියල්ල මකා දමනු ඇත \
+ස්ටිකර් ආදිය.
+බොට්ස් අගුළු දැමීම පරිපාලකයින් නොවන අය චැට් එකට බොට්ස් එකතු කිරීම වළක්වයි.
 """
 
 __mod_name__ = "Locks"
