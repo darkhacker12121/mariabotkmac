@@ -39,10 +39,10 @@ def get_user_id(username):
                     return userdat.id
 
             except BadRequest as excp:
-                if excp.message == 'Chat not found':
+                if excp.message == 'චැට් හමු නොවීය':
                     pass
                 else:
-                    LOGGER.exception("Error extracting user ID")
+                    LOGGER.exception("පරිශීලක හැඳුනුම්පත උකහා ගැනීමේ දෝෂයකි")
 
     return None
 
@@ -61,8 +61,8 @@ def broadcast(bot: Bot, update: Update):
                 failed += 1
                 LOGGER.warning("Couldn't send broadcast to %s, group name %s", str(chat.chat_id), str(chat.chat_name))
 
-        update.effective_message.reply_text("Broadcast complete. {} groups failed to receive the message, probably "
-                                            "due to being kicked.".format(failed))
+        update.effective_message.reply_text("විකාශනය සම්පූර්ණයි. {} කණ්ඩායම් පණිවිඩය ලැබීමට අසමත් විය, බොහෝ විට "
+                                            "පයින් ගැසීම නිසා.".format(failed))
 
 
 @run_async
@@ -96,14 +96,14 @@ def chats(bot: Bot, update: Update):
     with BytesIO(str.encode(chatfile)) as output:
         output.name = "chatlist.txt"
         update.effective_message.reply_document(document=output, filename="chatlist.txt",
-                                                caption="Here is the list of chats in my database.")
+                                                caption="මෙන්න මගේ දත්ත ගබඩාවේ ඇති කතාබස් ලැයිස්තුව.")
 
 
 def __user_info__(user_id):
     if user_id == dispatcher.bot.id:
-        return """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me."""
+        return """මම ඔවුන්ව දැකලා තියෙනවා ... වාව්. ඔවුන් මට පයින් ගසනවාද? ඔවුන් එකම තැනක මම ... ඔහ්. ඒ මමයි."""
     num_chats = sql.get_user_num_chats(user_id)
-    return """I've seen them in <code>{}</code> chats in total.""".format(num_chats)
+    return """මම ඒවා <code> {} </code> කතාබස් වලින් දැක ඇත්තෙමි.""".format(num_chats)
 
 
 def __stats__():
