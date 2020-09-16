@@ -23,9 +23,9 @@ def show_url(bot, update, args):
                 re.sub('<[^<]+?>', '', link_processed.feed.get("description", default="Unknown")))
             feed_link = link_processed.feed.get("link", default="Unknown")
 
-            feed_message = "<b>Feed Title:</b> \n{}" \
-                           "\n\n<b>Feed Description:</b> \n{}" \
-                           "\n\n<b>Feed Link:</b> \n{}".format(html.escape(feed_title),
+            feed_message = "<b>පෝෂණ මාතෘකාව:</b> \n{}" \
+                           "\n\n<b>සංග්‍රහ විස්තරය:</b> \n{}" \
+                           "\n\n<b>පෝෂණ සබැඳිය:</b> \n{}".format(html.escape(feed_title),
                                                                feed_description,
                                                                html.escape(feed_link))
 
@@ -35,9 +35,9 @@ def show_url(bot, update, args):
                     re.sub('<[^<]+?>', '', link_processed.entries[0].get("description", default="Unknown")))
                 entry_link = link_processed.entries[0].get("link", default="Unknown")
 
-                entry_message = "\n\n<b>Entry Title:</b> \n{}" \
-                                "\n\n<b>Entry Description:</b> \n{}" \
-                                "\n\n<b>Entry Link:</b> \n{}".format(html.escape(entry_title),
+                entry_message = "\n\n<b>ඇතුළත් කිරීමේ මාතෘකාව:</b> \n{}" \
+                                "\n\n<b>ප්‍රවේශ විස්තරය:</b> \n{}" \
+                                "\n\n<b>ඇතුළත් කිරීමේ සබැඳිය:</b> \n{}".format(html.escape(entry_title),
                                                                      entry_description,
                                                                      html.escape(entry_link))
                 final_message = feed_message + entry_message
@@ -46,9 +46,9 @@ def show_url(bot, update, args):
             else:
                 bot.send_message(chat_id=tg_chat_id, text=feed_message, parse_mode=ParseMode.HTML)
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("මෙම සබැඳිය RSS සංග්‍රහ සම්බන්ධකයක් නොවේ")
     else:
-        update.effective_message.reply_text("URL missing")
+        update.effective_message.reply_text("URL අස්ථානගත වී ඇත")
 
 
 def list_urls(bot, update):
@@ -63,12 +63,12 @@ def list_urls(bot, update):
 
     # check if the length of the message is too long to be posted in 1 chat bubble
     if len(final_content) == 0:
-        bot.send_message(chat_id=tg_chat_id, text="This chat is not subscribed to any links")
+        bot.send_message(chat_id=tg_chat_id, text="මෙම කතාබස් කිසිදු සබැඳියකට දායක නොවේ")
     elif len(final_content) <= constants.MAX_MESSAGE_LENGTH:
-        bot.send_message(chat_id=tg_chat_id, text="This chat is subscribed to the following links:\n" + final_content)
+        bot.send_message(chat_id=tg_chat_id, text="මෙම කතාබස් පහත සබැඳි සඳහා දායක වී ඇත:\n" + final_content)
     else:
         bot.send_message(chat_id=tg_chat_id, parse_mode=ParseMode.HTML,
-                         text="<b>Warning:</b> The message is too long to be sent")
+                         text="<b>Warning:</b>පණිවිඩය යැවීමට නොහැකි තරම් දිගුය)
 
 
 @user_admin
@@ -94,15 +94,15 @@ def add_url(bot, update, args):
 
             # check if there's an entry already added to DB by the same user in the same group with the same link
             if row:
-                update.effective_message.reply_text("This URL has already been added")
+                update.effective_message.reply_text("මෙම URL දැනටමත් එකතු කර ඇත")
             else:
                 sql.add_url(tg_chat_id, tg_feed_link, tg_old_entry_link)
 
-                update.effective_message.reply_text("Added URL to subscription")
+                update.effective_message.reply_text("දායකත්වයට URL එක් කරන ලදි")
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("මෙම සබැඳිය RSS සංග්‍රහ සම්බන්ධකයක් නොවේ")
     else:
-        update.effective_message.reply_text("URL missing")
+        update.effective_message.reply_text("URL අස්ථානගත වී ඇත")
 
 
 @user_admin
@@ -120,13 +120,13 @@ def remove_url(bot, update, args):
             if user_data:
                 sql.remove_url(tg_chat_id, tg_feed_link)
 
-                update.effective_message.reply_text("Removed URL from subscription")
+                update.effective_message.reply_text("URL දායකත්වයෙන් ඉවත් කරන ලදි")
             else:
-                update.effective_message.reply_text("You haven't subscribed to this URL yet")
+                update.effective_message.reply_text("ඔබ තවමත් මෙම URL වෙත දායක වී නොමැත")
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("මෙම සබැඳිය RSS සංග්‍රහ සම්බන්ධකයක් නොවේ")
     else:
-        update.effective_message.reply_text("URL missing")
+        update.effective_message.reply_text("URL අස්ථානගත වී ඇත")
 
 
 def rss_update(bot, job):
@@ -168,7 +168,7 @@ def rss_update(bot, job):
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
                 else:
-                    bot.send_message(chat_id=tg_chat_id, text="<b>Warning:</b> The message is too long to be sent",
+                    bot.send_message(chat_id=tg_chat_id, text="<b>අවවාදයයි:</b> පණිවිඩය යැවීමට නොහැකි තරම් දිගු ",
                                      parse_mode=ParseMode.HTML)
         else:
             for link, title in zip(reversed(new_entry_links[-5:]), reversed(new_entry_titles[-5:])):
@@ -177,11 +177,11 @@ def rss_update(bot, job):
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
                 else:
-                    bot.send_message(chat_id=tg_chat_id, text="<b>Warning:</b> The message is too long to be sent",
+                    bot.send_message(chat_id=tg_chat_id, text="<b>අවවාදයයි:</b> පණිවිඩය යැවීමට නොහැකි තරම් දිගු ",
                                      parse_mode=ParseMode.HTML)
 
             bot.send_message(chat_id=tg_chat_id, parse_mode=ParseMode.HTML,
-                             text="<b>Warning: </b>{} occurrences have been left out to prevent spam"
+                             text="<b>අවවාදයයි: </b>{} අයාචිත තැපැල් වැළැක්වීම සඳහා සිදුවීම් අතහැර දමා ඇත
                              .format(len(new_entry_links) - 5))
 
 
@@ -216,12 +216,12 @@ def rss_set(bot, job):
 
 
 __help__ = """
- - /addrss <link>: add an RSS link to the subscriptions.
- - /removerss <link>: removes the RSS link from the subscriptions.
- - /rss <link>: shows the link's data and the last entry, for testing purposes.
- - /listrss: shows the list of rss feeds that the chat is currently subscribed to.
+ - /addrss <link>: දායකත්වයට RSS සබැඳියක් එක් කරන්න.
+ - /removerss <link>: දායකත්වයන්ගෙන් RSS සබැඳිය ඉවත් කරයි.
+ - /rss <link>:පරීක්ෂණ අරමුණු සඳහා සබැඳියේ දත්ත සහ අවසාන ප්‍රවේශය පෙන්වයි.
+ - /listrss:චැට් දැනට දායක වී ඇති RSS සංග්‍රහ ලැයිස්තුව පෙන්වයි.
 
-NOTE: In groups, only admins can add/remove RSS links to the group's subscription
+සටහන: කණ්ඩායම් වශයෙන්, කළ හැක්කේ පරිපාලකයින්ට පමණි add/remove RSS සමූහයේ දායකත්වයට සබැඳි
 """
 
 __mod_name__ = "RSS Feed"
